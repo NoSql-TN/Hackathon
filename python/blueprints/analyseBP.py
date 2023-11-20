@@ -4,7 +4,7 @@ from flask.templating import render_template
 # Definition of the blueprint
 analyseBP = Blueprint('analyseBP', __name__)    
 
-from python.core.analyse_moyenne import get_moyenne_pop, mean_pop_per_genre
+from python.core.analyse_moyenne import get_moyenne_pop, mean_pop_per_genre, duration_popularity
 from python.database.get_db import get_db
 
 
@@ -13,4 +13,5 @@ from python.database.get_db import get_db
 def analyse():
     print(get_moyenne_pop(get_db()))
     print(mean_pop_per_genre(get_db()))
+    print(duration_popularity(get_db()))
     return render_template("analyse.html")
