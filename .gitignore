@@ -25,3 +25,6 @@ Thumbs.db
 # Ignore venv virtual environment
 venv/
 ```
+# pycache
+__pycache__/
+```

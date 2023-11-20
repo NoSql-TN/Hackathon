@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+ 
+
+{% block content %}
+<h1>Top 25 song duration based on popularity</h1>
+<img src="{{ url_for('static', filename='images/dur_pop_fig.png') }}" alt="dur_pop_fig">
+
+<h2>Top 25 song genre based on popularity</h2>
+<img src="{{ url_for('static', filename='images/mean_pop_per_genre_fig.png') }}" alt="genre_pop_fig">
+{% endblock %}
