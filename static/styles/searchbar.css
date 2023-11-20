@@ -1,0 +1,102 @@
+
+
+
+.container{
+    padding-top: 50px;
+}
+
+.container-grid{
+    padding-top: 40px;
+    width: 80vw;
+    align-items: center;
+    margin: auto;
+    padding: auto;
+}
+
+.form{
+    position: relative;
+}
+
+.form .fa-search{
+
+    position: absolute;
+    top:20px;
+    left: 20px;
+    color: #9ca3af;
+
+}
+
+.form span{
+
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    border-left: 1px solid #d1d5db;
+}
+
+
+
+.btn{
+    width: 100px;
+    height: 53px;
+    margin: 1px 1px 1px 0px;
+    text-align: center;
+    padding-top: 10px;
+    border-radius: 0px 9px 9px 0px;
+}
+
+/*on over inverse the color*/
+.btn:hover{
+    background-color: white;
+    color: #1DB954;
+}
+
+
+.btn input{
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn.active {                
+	display: none;		
+}
+
+.btn-genre{
+    background-color: #1DB954;
+    color: white;
+}
+
+
+.btn-artist{
+    background-color: #1DB954;
+    color: white;
+}
+
+
+.btn span:nth-of-type(1)  {            	
+	display: none;
+}
+.btn span:last-child  {            	
+	display: block;		
+}
+
+.btn.active  span:nth-of-type(1)  {            	
+	display: block;		
+}
+.btn.active span:last-child  {            	
+	display: none;			
+}
+
+.form-input{
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+.form-input:focus{
+
+    box-shadow: none;
+    border:none;
+}

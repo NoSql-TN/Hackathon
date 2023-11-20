@@ -1,4 +1,164 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/searchbar.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="form">
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="form-control form-input" placeholder="Filtrer par artiste ou genre">
+                    <span class="left-pan">
+                        <div class="" data-toggle="buttons">
+                            <label class="btn btn-lg btn-artist active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                                Artiste
+                            </label>
+                            <label class="btn btn-lg btn-genre">
+                                <input type="radio" name="options" id="option2" autocomplete="off">
+                                Genre
+                            </label>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="container-grid">
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Popularité</div>
+                    <div class="card-body">
+                        <canvas id="popularityCanvas"></canvas>
+                        <script src="../static/javascript/graph/popularity.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Dansable</div>
+                    <div class="card-body">
+                        <canvas id="danceabilityCanvas"></canvas>
+                        <script src="../static/javascript/graph/danceability.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Explicit</div>
+                    <div class="card-body">
+                        <canvas id="explicitCanvas"></canvas>
+                        <script src="../static/javascript/graph/explicit.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Durée</div>
+                    <div class="card-body">
+                        <canvas id="durationCanvas"></canvas>
+                        <script src="../static/javascript/graph/duration.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Clé</div>
+                    <div class="card-body">
+                        <canvas id="keyCanvas"></canvas>
+                        <script src="../static/javascript/graph/key.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Energie</div>
+                    <div class="card-body">
+                        <canvas id="energyCanvas"></canvas>
+                        <script src="../static/javascript/graph/energy.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Décibel</div>
+                    <div class="card-body">
+                        <canvas id="decibelCanvas"></canvas>
+                        <script src="../static/javascript/graph/decibel.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Parole</div>
+                    <div class="card-body">
+                        <canvas id="speechCanvas"></canvas>
+                        <script src="../static/javascript/graph/speech.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Instrumental</div>
+                    <div class="card-body">
+                        <canvas id="instrumentalCanvas"></canvas>
+                        <script src="../static/javascript/graph/instrumental.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">En live</div>
+                    <div class="card-body">
+                        <canvas id="liveCanvas"></canvas>
+                        <script src="../static/javascript/graph/live.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Genre</div>
+                    <div class="card-body">
+                        <canvas id="genreCanvas"></canvas>
+                        <script src="../static/javascript/graph/genre.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Valence</div>
+                    <div class="card-body">
+                        <canvas id="valenceCanvas"></canvas>
+                        <script src="../static/javascript/graph/valence.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Tempo</div>
+                    <div class="card-body">
+                        <canvas id="tempoCanvas"></canvas>
+                        <script src="../static/javascript/graph/tempo.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+            
+    {{data}}
+</div>
 {% endblock %}

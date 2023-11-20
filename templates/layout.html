@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
-        <a class="navbar-brand navbar-logo" href="/">Navbar</a>
+        <a class="navbar-brand navbar-logo" href="/">SpotiBanger</a>
         <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
@@ -41,22 +41,22 @@
                         </svg>Prédiction</a>
                 </li>
                 {% endif %}                
-                {% if url_for(request.endpoint) == "/analyse-moy" %}
+                {% if url_for(request.endpoint) == "/analyse-stats" %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="/analyse-moy"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
+                    <a class="nav-link" href="/analyse-stats"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/analyse-moy"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
+                    <a class="nav-link" href="/analyse-stats"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
                 </li>
                 {% endif %}
-                {% if url_for(request.endpoint) == "/analyse-tot" %}
+                {% if url_for(request.endpoint) == "/analyse-graph" %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="/analyse-tot"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
+                    <a class="nav-link" href="/analyse-graph"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/analyse-tot"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
+                    <a class="nav-link" href="/analyse-graph"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
                 </li>
                 {% endif %}
             </ul>

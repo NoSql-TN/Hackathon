@@ -49,7 +49,7 @@ def get_popularity_data(df):
     
     df = df.drop(columns=['Unnamed: 0', 'artists', 'duration_ms', 'explicit', 'mode', 'key', 'acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'loudness', 'speechiness', 'tempo', 'valence'])
     df = df.sort_values(by=['popularity'], ascending=False)
-    bins = np.linspace(0, 100, 20)
+    bins = np.linspace(0, 100, 50)
     bins = bins.astype(int)
     data = {}
     for i in range(len(bins)-1):
@@ -202,7 +202,3 @@ def get_tempo_data(df):
         for i in range(len(bins)-1):
             data[str(bins[i])] = len(df[(df['tempo'] >= bins[i]) & (df['tempo'] < bins[i+1])])
         return data
-
-
-
-    
