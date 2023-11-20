@@ -11,6 +11,4 @@ from python.database.get_db import get_db
 @mainBP.route("/")
 @mainBP.route("/home")
 def home():
-    print(get_moyenne_pop(get_db()))
-    print(mean_pop_per_genre(get_db()))
     return render_template("home.html")
