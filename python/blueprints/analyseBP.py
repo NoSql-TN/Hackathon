@@ -1,3 +1,6 @@
+import json
+import os
+
 from flask import Blueprint,session
 from flask.templating import render_template
 
@@ -5,7 +8,7 @@ from flask.templating import render_template
 analyseBP = Blueprint('analyseBP', __name__)    
 
 from python.core.analyse_moyenne import get_moyenne_pop, mean_pop_per_genre
-from python.core.analyse_totale import get_totale_pop, totale_pop_per_genre
+from python.core.analyse_totale import get_all_graphs
 from python.database.get_db import get_db
 
 
@@ -19,6 +22,5 @@ def analyseMoy():
 # Definition of the main route
 @analyseBP.route("/analyse-tot")
 def analyseTot():
-    print(get_totale_pop(get_db()))
-    print(totale_pop_per_genre(get_db()))
-    return render_template("analyse-tot.html")
+    data = get_all_graphs()
+    return render_template("analyse-tot.html", data=data)
