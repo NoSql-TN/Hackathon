@@ -11,28 +11,53 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
-        <a class="navbar-brand navbar-logo" href="/home">Navbar</a>
+        <a class="navbar-brand navbar-logo" href="/">Navbar</a>
         <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-                <li class="nav-item">
-                    <a class="nav-link" href="/generation"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
-                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
-                      </svg></i> Génération</a>
-                </li>
+                {% if url_for(request.endpoint) == "/generation" %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="/prediction"><img srcset="https://img.icons8.com/?size=128&amp;id=NXc4aC8hKxe6&amp;format=png 1x, https://img.icons8.com/?size=128&amp;id=NXc4aC8hKxe6&amp;format=png 2x," src="https://img.icons8.com/?size=128&amp;id=NXc4aC8hKxe6&amp;format=png 2x" alt="Predict" width="16" height="16" style="width: 16px; height: 16px;" lazy="loaded">Prédiction</a>
+                    <a class="nav-link" href="/generation"><i class="fa-solid fa-gear"></i></i>Génération</a>
                 </li>
+                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/analyse"><i class="fas fa-tachometer-alt"></i>Analyse</a>
-                        <ul>
-                        <li><a href="#">Moyenne</a></li>
-                        <li><a href="#">Totale</a></li>
-                        </ul>
+                    <a class="nav-link" href="/generation"><i class="fa-solid fa-gear"></i></i>Génération</a>
                 </li>
+                {% endif %}
+                {% if url_for(request.endpoint) == "/prediction" %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/prediction"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                        </svg>Prédiction</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/prediction"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                        <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                        </svg>Prédiction</a>
+                </li>
+                {% endif %}                
+                {% if url_for(request.endpoint) == "/analyse-moy" %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/analyse-moy"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/analyse-moy"><i class="fas fa-tachometer-alt"></i>Analyse Moyenne</a>
+                </li>
+                {% endif %}
+                {% if url_for(request.endpoint) == "/analyse-tot" %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="/analyse-tot"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/analyse-tot"><i class="fas fa-tachometer-alt"></i>Analyse Totale</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
     </nav>

@@ -1,4 +1,4 @@
-from flask import Blueprint,session
+from flask import Blueprint,session,redirect
 from flask.templating import render_template
 
 # Definition of the blueprint
@@ -11,4 +11,4 @@ from python.database.get_db import get_db
 @mainBP.route("/")
 @mainBP.route("/home")
 def home():
-    return render_template("home.html")
+    return redirect("/generation")

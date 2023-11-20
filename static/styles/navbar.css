@@ -30,6 +30,12 @@ i {
 #navbarSupportedContent ul li a i{
 	margin-right: 10px;
 }
+#navbarSupportedContent ul li a img{
+	margin-right: 10px;
+}
+#navbarSupportedContent ul li a svg{
+	margin-right: 10px;
+}
 #navbarSupportedContent li {
 	list-style-type: none;
 	float: left;
@@ -110,11 +116,11 @@ i {
     left: -25px;
 }
 
-.navbar ul ul {
-    position: absolute;
-    top: 100%;
-    display: none;
-}
+
+
+
+
+    
 
 
 @media(min-width: 992px){
