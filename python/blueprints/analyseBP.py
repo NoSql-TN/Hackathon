@@ -9,8 +9,15 @@ from python.database.get_db import get_db
 
 
 # Definition of the main route
-@analyseBP.route("/analyse")
-def analyse():
+@analyseBP.route("/analyse-moy")
+def analyseMoy():
+    print(get_moyenne_pop(get_db()))
+    print(mean_pop_per_genre(get_db()))
+    return render_template("analyse.html")
+
+# Definition of the main route
+@analyseBP.route("/analyse-tot")
+def analyseTot():
     print(get_moyenne_pop(get_db()))
     print(mean_pop_per_genre(get_db()))
     print(duration_popularity(get_db()))

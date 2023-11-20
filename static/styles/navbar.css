@@ -30,6 +30,12 @@ i {
 #navbarSupportedContent ul li a i{
 	margin-right: 10px;
 }
+#navbarSupportedContent ul li a img{
+	margin-right: 10px;
+}
+#navbarSupportedContent ul li a svg{
+	margin-right: 10px;
+}
 #navbarSupportedContent li {
 	list-style-type: none;
 	float: left;
@@ -109,6 +115,12 @@ i {
 	bottom: 0;
     left: -25px;
 }
+
+
+
+
+
+    
 
 
 @media(min-width: 992px){
