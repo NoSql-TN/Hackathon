@@ -5,6 +5,7 @@ from flask.templating import render_template
 analyseBP = Blueprint('analyseBP', __name__)    
 
 from python.core.analyse_moyenne import get_moyenne_pop, mean_pop_per_genre
+from python.core.analyse_totale import get_totale_pop, totale_pop_per_genre
 from python.database.get_db import get_db
 
 
@@ -13,11 +14,11 @@ from python.database.get_db import get_db
 def analyseMoy():
     print(get_moyenne_pop(get_db()))
     print(mean_pop_per_genre(get_db()))
-    return render_template("analyse.html")
+    return render_template("analyse-moy.html")
 
 # Definition of the main route
 @analyseBP.route("/analyse-tot")
 def analyseTot():
-    print(get_moyenne_pop(get_db()))
-    print(mean_pop_per_genre(get_db()))
-    return render_template("analyse.html")
+    print(get_totale_pop(get_db()))
+    print(totale_pop_per_genre(get_db()))
+    return render_template("analyse-tot.html")
