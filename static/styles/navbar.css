@@ -110,6 +110,12 @@ i {
     left: -25px;
 }
 
+.navbar ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
 
 @media(min-width: 992px){
 	.navbar-expand-custom {
