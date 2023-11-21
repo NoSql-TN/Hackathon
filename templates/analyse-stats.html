@@ -9,25 +9,34 @@
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
-                <div class="form">
+                <form class="form" action = "/analyse-stats" method = "post">
                     <i class="fa fa-search"></i>
-                    <input type="text" class="form-control form-input" placeholder="Filtrer par artiste ou genre">
+                    <input type="text" class="form-control form-input" name="filter" placeholder="Filtrer par artiste ou genre">
                     <span class="left-pan">
                         <div class="" data-toggle="buttons">
-                            <label class="btn btn-lg btn-artist active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                            <label class="btn btn-lg btn-artist">
+                                <input type="radio" name="artiste" id="option1" autocomplete="off">
                                 Artiste
                             </label>
-                            <label class="btn btn-lg btn-genre">
-                                <input type="radio" name="options" id="option2" autocomplete="off">
+                            <label class="btn btn-lg btn-genre active">
+                                <input type="radio" name="genre" id="option2" autocomplete="off">
                                 Genre
                             </label>
                         </div>
                     </span>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+    {% if name!="" %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Analyse de {{name}}</h1>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="container-grid">
         <div class="row">
@@ -36,7 +45,7 @@
                     <div class="card-header">Popularité moyenne</div>
                     <div class="card-body">
                         <canvas id="popularityCanvas"></canvas>
-                        {{ stats[0] }}
+                        {{ stats[0] }} %
                     </div>
                 </div>
             </div>
@@ -45,7 +54,7 @@
                     <div class="card-header">Mots les plus utilisés</div>
                     <div class="card-body">
                         <canvas id="wordsCanvas"></canvas>
-                        Explicit content : {{ stats[2] }}
+                        Explicit content : {{ stats[3] }} %<br>
                         {% for word in stats[1] %}
                             {{ word[0] }}, {{ word[1] }}<br>
                         {% endfor %}
@@ -54,21 +63,56 @@
             </div>
         </div>
         <div class="row">
+            {% if name!="" and artiste=="" and genre==""%}
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Genre et Artistes les plus connus</div>
+                    <div class="card-body">
+                        <canvas id="artistgenresCanvas"></canvas>
+                        {% for artiste in stats[11] %}
+                            {{ artiste }}<br>
+                        {% endfor %}
+                        <hr>
+                        {% for genre in stats[12] %}
+                            {{ genre }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% elif artiste!="" %}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Genre</div>
                     <div class="card-body">
-                        <canvas id="durationCanvas"></canvas>
-                        
+                        <canvas id="artistgenresCanvas"></canvas>
+                        {% for genre in stats[11] %}
+                            {{ genre }}<br>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Artiste</div>
+                    <div class="card-body">
+                        <canvas id="artistgenresCanvas"></canvas>
+                        {% for artiste in stats[11] %}
+                            {{ artiste }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Musicalité</div>
                     <div class="card-body">
-                        <canvas id="keyCanvas"></canvas>
-                        <script src="../static/javascript/graph/key.js"></script>
+                        <canvas id="musicaliteCanvas"></canvas>
+                        Danceability : {{ stats[4] }} %<br>
+                        Speechiness : {{ stats[8] }} %<br>
+                        Instrumentalness : {{ stats[9] }} %<br>
+                        Key : {{ stats[5] }}<br>
                     </div>
                 </div>
             </div>
@@ -78,8 +122,9 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Rythmique</div>
                     <div class="card-body">
-                        <canvas id="durationCanvas"></canvas>
-                        <script src="../static/javascript/graph/duration.js"></script>
+                        <canvas id="rythmiqueCanvas"></canvas>
+                        Tempo : {{ stats[10] }}<br>
+                        Energy : {{ stats[6] }} %<br>
                     </div>
                 </div>
             </div>
@@ -88,7 +133,8 @@
                     <div class="card-header">Durée moyenne</div>
                     <div class="card-body">
                         <canvas id="keyCanvas"></canvas>
-                        <script src="../static/javascript/graph/key.js"></script>
+                        {{ stats[2][0] }} s<br> 
+                        {{ stats[2][1] }} min {{stats[2][2]}}s
                     </div>
                 </div>
             </div>

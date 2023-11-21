@@ -5,7 +5,7 @@ from flask.templating import render_template
 # Definition of the blueprint
 analyseBP = Blueprint('analyseBP', __name__)    
 
-from python.core.analyse_moyenne import get_stats
+from python.core.analyse_moyenne import get_stats,get_stats2
 from python.core.analyse_totale import get_all_graphs, get_all_graphs_with_filter
 from python.database.get_db import get_db
 
@@ -15,14 +15,19 @@ from python.database.get_db import get_db
 @analyseBP.route("/analyse-stats", methods=["GET", "POST"])
 def analyseMoy():
     if request.method == "POST":
-        artist = request.form.get("artist")
-        genre = request.form.get("genre")
-        stats = get_stats(artist,genre)
-        return render_template("analyse-stats.html", stats=stats)
+        filter = request.form.get("filter")
+        artiste = request.form.get("artiste") == None
+        if artiste:
+            stats = get_stats2(filter,False)
+            filter = filter.title()
+            return render_template("analyse-stats.html",name=filter, artiste=filter,genre="", stats=stats)
+        else:
+            stats = get_stats2(False,filter)
+            filter = filter.title()
+            return render_template("analyse-stats.html",name=filter,artiste="", genre=filter, stats=stats)
     else:
         stats = get_stats()
-        print(stats)
-        return render_template("analyse-stats.html", stats=stats)
+        return render_template("analyse-stats.html", stats=stats,name="",artiste="", genre="")
 
 # Definition of the graph route
 @analyseBP.route("/analyse-graph", methods=['GET', 'POST'])
@@ -31,14 +36,13 @@ def analyseTot():
     if request.method == 'POST':
         filter = request.form.get('filter')
         artiste = request.form.get('artiste') == None
-        print(filter)
-        print(artiste)
         if filter:
             data = get_all_graphs_with_filter(filter,artiste)
         else:
             data = get_all_graphs()
         with open("static/data.json", "w") as f:
             json.dump(data, f, indent=4)
+        filter = filter.title()
         return render_template("analyse-graph.html", name=filter, artiste=artiste)
     else:
         data = get_all_graphs()
