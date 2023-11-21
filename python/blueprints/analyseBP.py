@@ -33,12 +33,12 @@ def analyseTot():
             data = get_all_graphs()
         with open("static/data.json", "w") as f:
             json.dump(data, f, indent=4)
-        return render_template("analyse-graph.html")
+        return render_template("analyse-graph.html", name=filter, artiste=artiste)
     else:
         data = get_all_graphs()
         with open("static/data.json", "w") as f:
             json.dump(data, f, indent=4)
-        return render_template("analyse-graph.html")
+        return render_template("analyse-graph.html", name="")
 
 @analyseBP.route("/get-data-graph-popularity")
 def get_data_graph():

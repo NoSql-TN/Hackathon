@@ -27,6 +27,18 @@
             </div>
         </div>
     </div>
+    <!--
+        If a artist has been search for, display the artist's name
+    -->
+    {% if name!="" %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Analyse de {{name}}</h1>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="container-grid">
         <div class="row">
