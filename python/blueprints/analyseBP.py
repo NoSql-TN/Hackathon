@@ -6,8 +6,9 @@ from flask.templating import render_template
 analyseBP = Blueprint('analyseBP', __name__)    
 
 from python.core.analyse_moyenne import get_stats
-from python.core.analyse_totale import get_all_graphs
+from python.core.analyse_totale import get_all_graphs, get_all_graphs_with_filter
 from python.database.get_db import get_db
+
 
 
 # Definition of the stats route
