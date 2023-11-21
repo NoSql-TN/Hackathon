@@ -35,6 +35,11 @@ def plot_correlation_matrix(df):
     plt.show()
 
 #plot_correlation_matrix(df)
+#change the track_id into 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15...
+df = df.reset_index(drop=True)
+print(df.head())
+
+
 
 
 #Unfortunately we expected some parameters with a high correlation with the popularity but we didn't find any. (Max = 0.13 danceability)
@@ -49,7 +54,9 @@ df_selected = df[selected_columns]
 df_selected = df_selected.astype({'danceability': float , 'energy': float, 'acousticness': float, 'instrumentalness': float, 'tempo': float,
                     'duration_ms': int, 'popularity': int, 'track_genre': str, 'artists': str, 'explicit': bool, 'key': int})
 
-print(df_selected.head())
+
+
+
 
 # encode the genre column
 genre_encoder = OneHotEncoder(handle_unknown='ignore')
@@ -60,8 +67,9 @@ genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
 print("The encoded genre column is:")
 print(genre_encoded)
 # Drop original categorical columns
-df_selected = df_selected.drop(['track_genre'], axis=1)
+#df_selected = df_selected.drop(['track_genre'], axis=1)
 print("Vérification encoder genre")
+
 
 #encode the artists column
 artists_encoder = OneHotEncoder(handle_unknown='ignore')
@@ -72,8 +80,10 @@ artists_encoded = pd.DataFrame(artists_encoded, columns=artists_encoder.categori
 print("The encoded artists column is:")
 print(artists_encoded)
 # Drop original categorical columns
-df_selected = df_selected.drop(['artists'], axis=1)
+#df_selected = df_selected.drop(['artists'], axis=1)
 print("Vérification encoder artists")
+
+
 
 #for the encoding of the explicit column we need to convert the boolean to int so we don't need a OneHotEncoder
 #encode the explicit column with true becomes 1 and false becomes 0
@@ -81,12 +91,21 @@ df_selected['explicit'] = df_selected['explicit'].astype(int)
 print("Vérification encoder explicit")
 print(df_selected['explicit'])
 
+print(df_selected)
+
+print(df_selected['popularity'])
+
 #Now all our parameters are well encoded, we can concatenate them to the dataframe
 df_selected = pd.concat([df_selected, genre_encoded, artists_encoded], axis=1)
+print(df_selected['popularity'])
+# Drop the original categorical columns from the encoded DataFrame
+df_selected = df_selected.drop(['track_genre', 'artists'], axis=1)
 print("Vérification concaténation")
 #some values are NaN so we need to replace them with 0
+print(df_selected['popularity'])
+
 df_selected = df_selected.fillna(0)
-print(df_selected.head())
+
 
 
 
@@ -120,6 +139,12 @@ print(model)
 y_pred = model.predict(X_test)
 print("Vérification prédiction")
 print(y_pred)
+print(y_pred[0])
+print(y_test.iloc[0])
+print(y_pred[10])
+print(y_test.iloc[10])
+print(y_pred[20])
+print(y_test.iloc[20])
 
 #Evaluate the model
 from sklearn.metrics import mean_squared_error
@@ -145,3 +170,17 @@ print("Mean cross validation score : ", scores.mean())
 
 #All individual cross-validation scores are very close to each other, suggesting consistent performance across different subsets of the training data.
 #The high mean cross-validation score (close to 1) indicates that your model generalizes well to new, unseen data. It consistently performs at a high level across different training subsets.
+
+#save the model
+import pickle
+filename = 'finalized_model.sav'
+pickle.dump(model, open(filename, 'wb'))
+print("Vérification sauvegarde modèle")
+
+#load the model
+loaded_model = pickle.load(open(filename, 'rb'))
+result = loaded_model.score(X_test, y_test)
+print("Vérification chargement modèle")
+print(result)
+
+
