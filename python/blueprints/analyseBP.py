@@ -1,12 +1,12 @@
 import json
-from flask import Blueprint,session
+from flask import Blueprint, request,session
 from flask.templating import render_template
 
 # Definition of the blueprint
 analyseBP = Blueprint('analyseBP', __name__)    
 
 # from python.core.analyse_moyenne import get_moyenne_pop, mean_pop_per_genre, duration_popularity
-from python.core.analyse_totale import get_all_graphs
+from python.core.analyse_totale import get_all_graphs, get_all_graphs_with_filter
 from python.database.get_db import get_db
 
 
@@ -19,12 +19,26 @@ from python.database.get_db import get_db
     # return render_template("analyse-stats.html", dur_pop_fig = dur_pop_fig, mean_pop_per_genre_fig = mean_pop_per_genre_fig)
 
 # Definition of the graph route
-@analyseBP.route("/analyse-graph")
+@analyseBP.route("/analyse-graph", methods=['GET', 'POST'])
 def analyseTot():
-    data = get_all_graphs()
-    with open("static/data.json", "w") as f:
-        json.dump(data, f, indent=4)
-    return render_template("analyse-graph.html")
+    # check if request is methods POST
+    if request.method == 'POST':
+        filter = request.form.get('filter')
+        artiste = request.form.get('artiste') == None
+        print(filter)
+        print(artiste)
+        if filter:
+            data = get_all_graphs_with_filter(filter,artiste)
+        else:
+            data = get_all_graphs()
+        with open("static/data.json", "w") as f:
+            json.dump(data, f, indent=4)
+        return render_template("analyse-graph.html")
+    else:
+        data = get_all_graphs()
+        with open("static/data.json", "w") as f:
+            json.dump(data, f, indent=4)
+        return render_template("analyse-graph.html")
 
 @analyseBP.route("/get-data-graph-popularity")
 def get_data_graph():

@@ -13,6 +13,22 @@ def get_all_graphs():
     data = get_data_for_graphs(df)
     return data
 
+def get_all_graphs_with_filter(filter, artiste):
+    db = get_db()
+    df = pd.DataFrame(db)
+    df = df.dropna()
+    df = df.drop_duplicates()
+    if artiste:
+        df = df[df['artists'].str.contains(filter, case=False)]
+        # print the length of the dataframe
+        print(len(df))
+    else:
+        df = df[df['track_genre'].str.contains(filter, case=False)]
+    # keep all song that have the filter in the artist column
+    data = get_data_for_graphs(df)
+    return data
+
+
 def get_data_for_graphs(df):
     
     # the goal is to generate the data for all the graphs:
