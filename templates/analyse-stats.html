@@ -2,9 +2,95 @@
  
 
 {% block content %}
-<h1>Top 25 song duration based on popularity</h1>
-<img src="{{ url_for('static', filename='images/dur_pop_fig.png') }}" alt="dur_pop_fig">
-
-<h2>Top 25 song genre based on popularity</h2>
-<img src="{{ url_for('static', filename='images/mean_pop_per_genre_fig.png') }}" alt="genre_pop_fig">
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/searchbar.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="form">
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="form-control form-input" placeholder="Filtrer par artiste ou genre">
+                    <span class="left-pan">
+                        <div class="" data-toggle="buttons">
+                            <label class="btn btn-lg btn-artist active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                                Artiste
+                            </label>
+                            <label class="btn btn-lg btn-genre">
+                                <input type="radio" name="options" id="option2" autocomplete="off">
+                                Genre
+                            </label>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="container-grid">
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Popularité moyenne</div>
+                    <div class="card-body">
+                        <canvas id="popularityCanvas"></canvas>
+                        {{ stats[0] }}
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Mots les plus utilisés</div>
+                    <div class="card-body">
+                        <canvas id="wordsCanvas"></canvas>
+                        Explicit content : {{ stats[2] }}
+                        {% for word in stats[1] %}
+                            {{ word[0] }}, {{ word[1] }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Genre</div>
+                    <div class="card-body">
+                        <canvas id="durationCanvas"></canvas>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Musicalité</div>
+                    <div class="card-body">
+                        <canvas id="keyCanvas"></canvas>
+                        <script src="../static/javascript/graph/key.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Rythmique</div>
+                    <div class="card-body">
+                        <canvas id="durationCanvas"></canvas>
+                        <script src="../static/javascript/graph/duration.js"></script>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
+                    <div class="card-header">Durée moyenne</div>
+                    <div class="card-body">
+                        <canvas id="keyCanvas"></canvas>
+                        <script src="../static/javascript/graph/key.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
 {% endblock %}
