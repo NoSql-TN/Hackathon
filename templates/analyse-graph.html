@@ -8,25 +8,37 @@
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
-                <div class="form">
+                <form class="form" action = "/analyse-graph" method = "post">
                     <i class="fa fa-search"></i>
-                    <input type="text" class="form-control form-input" placeholder="Filtrer par artiste ou genre">
+                    <input type="text" class="form-control form-input" name="filter" placeholder="Filtrer par artiste ou genre">
                     <span class="left-pan">
                         <div class="" data-toggle="buttons">
-                            <label class="btn btn-lg btn-artist active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked>
+                            <label class="btn btn-lg btn-artist">
+                                <input type="radio" name="artiste" id="option1" autocomplete="off">
                                 Artiste
                             </label>
-                            <label class="btn btn-lg btn-genre">
-                                <input type="radio" name="options" id="option2" autocomplete="off">
+                            <label class="btn btn-lg btn-genre active">
+                                <input type="radio" name="genre" id="option2" autocomplete="off">
                                 Genre
                             </label>
                         </div>
                     </span>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+    <!--
+        If a artist has been search for, display the artist's name
+    -->
+    {% if name!="" %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center">Analyse de {{name}}</h1>
+            </div>
+        </div>
+    </div>
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <div class="container-grid">
         <div class="row">

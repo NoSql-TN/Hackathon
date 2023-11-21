@@ -24,12 +24,26 @@ def analyseMoy():
         return render_template("analyse-stats.html", stats=stats)
 
 # Definition of the graph route
-@analyseBP.route("/analyse-graph")
+@analyseBP.route("/analyse-graph", methods=['GET', 'POST'])
 def analyseTot():
-    data = get_all_graphs()
-    with open("static/data.json", "w") as f:
-        json.dump(data, f, indent=4)
-    return render_template("analyse-graph.html")
+    # check if request is methods POST
+    if request.method == 'POST':
+        filter = request.form.get('filter')
+        artiste = request.form.get('artiste') == None
+        print(filter)
+        print(artiste)
+        if filter:
+            data = get_all_graphs_with_filter(filter,artiste)
+        else:
+            data = get_all_graphs()
+        with open("static/data.json", "w") as f:
+            json.dump(data, f, indent=4)
+        return render_template("analyse-graph.html", name=filter, artiste=artiste)
+    else:
+        data = get_all_graphs()
+        with open("static/data.json", "w") as f:
+            json.dump(data, f, indent=4)
+        return render_template("analyse-graph.html", name="")
 
 @analyseBP.route("/get-data-graph-popularity")
 def get_data_graph():

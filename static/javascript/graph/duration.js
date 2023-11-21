@@ -13,6 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 labels[i] = parseFloat(labels[i]).toFixed(2).toString() + " min";
             }
 
+            var temp;
+            for (var i = 0; i < labels.length; i++) {
+                for (var j = 0; j < labels.length; j++) {
+                    if (parseFloat(labels[i]) < parseFloat(labels[j])) {
+                        temp = labels[i];
+                        labels[i] = labels[j];
+                        labels[j] = temp;
+
+                        temp = values[i];
+                        values[i] = values[j];
+                        values[j] = temp;
+                    }
+                }
+            }
+
             
             var myChart = new Chart(canvas, {
                 type: 'bar',

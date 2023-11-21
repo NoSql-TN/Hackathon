@@ -35,8 +35,6 @@
     border-left: 1px solid #d1d5db;
 }
 
-
-
 .btn{
     width: 100px;
     height: 53px;
@@ -63,13 +61,15 @@
 	display: none;		
 }
 
-.btn-genre{
+
+
+
+.btn-artist{
     background-color: #1DB954;
     color: white;
 }
 
-
-.btn-artist{
+.btn-genre{
     background-color: #1DB954;
     color: white;
 }
