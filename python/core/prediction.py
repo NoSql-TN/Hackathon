@@ -7,120 +7,141 @@ import seaborn as sns
 from sklearn.cluster import KMeans, SpectralClustering
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_samples, silhouette_score, confusion_matrix
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.preprocessing import OneHotEncoder
+
 
 # Load your dataset
-# Assuming your dataset is in a CSV file named 'your_dataset.csv'
-data = pd.read_csv('Desktop/Hackaton/dataset.csv')
-data = data.drop('Unnamed: 0', axis=1)
+db = pd.read_csv('dataset.csv', sep=',')
+df = pd.DataFrame(db)
+df = df.dropna()
+df = df.drop_duplicates()
+
 # Exclude non-numeric columns from the correlation analysis
-numeric_df = data.select_dtypes(include='number')
+numeric_df = df.select_dtypes(include='number')
 
 #select only the 5000 songs with most popularity
-data = data.sort_values(by=['popularity'], ascending=False)
-data = data.head(5000)
+df = df.sort_values(by=['popularity'], ascending=False)
+df = df.head(5000)
+
+#Function that plot the correlation matrix
+def plot_correlation_matrix(df):
+    corr = numeric_df.corr()
+    mask = np.zeros_like(corr)
+    mask[np.triu_indices_from(mask)] = True
+    plt.figure(figsize=(12, 10))
+    sns.heatmap(corr, mask=mask, annot=True, fmt=".2f")
+    plt.title('Correlation Matrix')
+    plt.show()
+
+#plot_correlation_matrix(df)
 
 
-# Display the correlation matrix
-correlation_matrix = numeric_df.corr()
-plt.figure(figsize=(12, 10))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
-plt.title('Correlation Matrix')
-plt.show()
+#Unfortunately we expected some parameters with a high correlation with the popularity but we didn't find any. (Max = 0.13 danceability)
 
-# Display the correlation with the target variable (popularity)
-popularity_correlation = correlation_matrix['popularity'].sort_values(ascending=False)
-print("Correlation with Popularity:\n", popularity_correlation)
+#Maybe we can find some correlation between the parameters and the popularity if we use the clustering method
 
-# Select the most highly correlated features
-# (you may alternatively select the features manually)
-threshold = 0.5
-popularity_correlation = popularity_correlation[popularity_correlation > threshold]
-print("Most correlated features:\n", popularity_correlation)
+# Select relevant columns
+selected_columns = ['danceability', 'energy', 'acousticness', 'instrumentalness', 'tempo',
+                    'duration_ms', 'popularity', 'track_genre', 'artists', 'explicit', 'key']
 
-# The problem that appears here is that the correlation between the features and the popularity is not very high.
-# The Maximum is 0.05 and the lowest is -0.10 so we will probably need to find an other way to predict the popularity
+df_selected = df[selected_columns]
+df_selected = df_selected.astype({'danceability': float , 'energy': float, 'acousticness': float, 'instrumentalness': float, 'tempo': float,
+                    'duration_ms': int, 'popularity': int, 'track_genre': str, 'artists': str, 'explicit': bool, 'key': int})
+
+print(df_selected.head())
+
+# encode the genre column
+genre_encoder = OneHotEncoder(handle_unknown='ignore')
+genre_encoder.fit(df_selected[['track_genre']])
+genre_encoded = genre_encoder.transform(df_selected[['track_genre']]).toarray()
+genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
+# print the encoded genre column
+print("The encoded genre column is:")
+print(genre_encoded)
+# Drop original categorical columns
+df_selected = df_selected.drop(['track_genre'], axis=1)
+print("Vérification encoder genre")
+
+#encode the artists column
+artists_encoder = OneHotEncoder(handle_unknown='ignore')
+artists_encoder.fit(df_selected[['artists']])
+artists_encoded = artists_encoder.transform(df_selected[['artists']]).toarray()
+artists_encoded = pd.DataFrame(artists_encoded, columns=artists_encoder.categories_)
+# print the encoded artists column
+print("The encoded artists column is:")
+print(artists_encoded)
+# Drop original categorical columns
+df_selected = df_selected.drop(['artists'], axis=1)
+print("Vérification encoder artists")
+
+#for the encoding of the explicit column we need to convert the boolean to int so we don't need a OneHotEncoder
+#encode the explicit column with true becomes 1 and false becomes 0
+df_selected['explicit'] = df_selected['explicit'].astype(int)
+print("Vérification encoder explicit")
+print(df_selected['explicit'])
+
+#Now all our parameters are well encoded, we can concatenate them to the dataframe
+df_selected = pd.concat([df_selected, genre_encoded, artists_encoded], axis=1)
+print("Vérification concaténation")
+#some values are NaN so we need to replace them with 0
+df_selected = df_selected.fillna(0)
+print(df_selected.head())
 
 
+
+#Train a model to predict the popularity
+#Split the dataset into training and testing sets
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-
-# Select features (excluding non-numeric columns like track_id, artists, etc.)
-X = data.select_dtypes(include='number').drop(columns=['popularity'])
-
-# Target variable
-y = data['popularity']
-
-# Split the data into training and testing sets
+X = df_selected.drop(['popularity'], axis=1)
+y = df_selected['popularity']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+print("Vérification split")
+print(X_train.head())
+print(y_train.head())
 
-# Fit a linear regression model
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-# Get feature importance
-feature_importance = pd.Series(model.coef_, index=X.columns).sort_values(ascending=False)
-print("Feature Importance:\n", feature_importance)
+#we need to convert the name of a column to string because we have a tuple in the name of a column
+X_train.columns = X_train.columns.astype(str)
+X_test.columns = X_test.columns.astype(str)
 
 
-# Make a code able to predict the popularity of a song if we give the features of the song
+#Feature names are only supported if all input features have string names, but your input has ['str', 'tuple'] as feature name / column name types. If you want feature names to be stored and validated, you must convert them all to strings, by using X.columns = X.columns.astype(str) for example. Otherwise you can remove feature / column names from your input data, or convert them all to a non-string data type.
+#https://stackoverflow.com/questions/49545947/feature-names-are-only-supported-if-all-input-features-have-string-names-but-yo
 
-print("Popularity prediction for a song:")
 
+#create a model and train it in order to predict the popularity
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
+model = RandomForestRegressor(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+print("Vérification modèle")
+print(model)
 
-# Assuming your dataframe is named 'df'
-# Perform data preprocessing, feature selection, and conversion to numerical values
+#Predict the popularity
+y_pred = model.predict(X_test)
+print("Vérification prédiction")
+print(y_pred)
 
-# Select features and target variable
-X = data.drop(['popularity', 'track_id'], axis=1)
-y = data['popularity']
-
-# Separate numerical and categorical features
-numerical_features = X.select_dtypes(include=['float64', 'int64']).columns
-categorical_features = X.select_dtypes(include=['object']).columns
-
-# Define transformers for numerical and categorical features
-numerical_transformer = StandardScaler()
-categorical_transformer = OneHotEncoder()
-
-
+#Evaluate the model
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import r2_score
+print("Vérification évaluation")
+print("MSE : ", mean_squared_error(y_test, y_pred))
+print("MAE : ", mean_absolute_error(y_test, y_pred))
+print("R2 : ", r2_score(y_test, y_pred))
 
 
+#Overall, based on these metrics, thte Random Forest model seems to be performing very well on the test set. 
+#The low values of MSE and MAE indicate that the predictions are generally close to the actual values, 
+#and the high R-squared value suggests that the model is capturing the patterns in the data effectively.
+
+#Can you do a cross validation to see if the model is overfitting or not?
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(model, X_train, y_train, cv=5)
+print("Vérification cross validation")
+print(scores)
+print("Mean cross validation score : ", scores.mean())
 
 
-
-#Import Random Forest Model
-from sklearn.ensemble import RandomForestClassifier
-
-#Create a Gaussian Classifier
-rf2=RandomForestClassifier(n_estimators=100, max_depth = 100, max_features = 'sqrt', min_samples_leaf =1,min_samples_split =2)
-
-#Train the model using the training sets y_pred=clf.predict(X_test)
-rf2.fit(X_train, y_train)
-
-y_train_predrf2 = rf2.predict(X_train)
-y_test_predrf2 = rf2.predict(X_test)
-
-conf_matrix_rf2 = confusion_matrix(y_true=y_test, y_pred=y_test_predrf2)
-#
-# Print the confusion matrix using Matplotlib
-#
-fig, ax = plt.subplots(figsize=(5, 5))
-ax.matshow(conf_matrix_rf2, cmap=plt.cm.Oranges, alpha=0.3)
-for i in range(conf_matrix_rf2.shape[0]):
-    for j in range(conf_matrix_rf2.shape[1]):
-        ax.text(x=j, y=i,s=conf_matrix_rf2[i, j], va='center', ha='center', size='xx-large')
- 
-plt.xlabel('Predictions', fontsize=18)
-plt.ylabel('Actuals', fontsize=18)
-plt.title('Confusion Matrix', fontsize=18)
-plt.show()
-print("Accuracy: ", (conf_matrix_rf2[0,0]+conf_matrix_rf2[1,1])/(conf_matrix_rf2[0,0]+conf_matrix_rf2[1,1]+conf_matrix_rf2[0,1]+conf_matrix_rf2[1,0]) )
-print("Precision: ", (conf_matrix_rf2[0,0])/(conf_matrix_rf2[0,0]+conf_matrix_rf2[0,1]) )
-print("Recall: ", (conf_matrix_rf2[0,0])/(conf_matrix_rf2[0,0]+conf_matrix_rf2[1,0]) )
-
-
+#All individual cross-validation scores are very close to each other, suggesting consistent performance across different subsets of the training data.
+#The high mean cross-validation score (close to 1) indicates that your model generalizes well to new, unseen data. It consistently performs at a high level across different training subsets.
