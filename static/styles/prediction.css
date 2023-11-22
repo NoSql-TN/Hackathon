@@ -1,0 +1,50 @@
+
+.container{
+    padding-top: 50px;
+}
+
+.container-grid{
+    padding-top: 40px;
+    width: 80vw;
+    align-items: center;
+    margin: auto;
+    padding: auto;
+}
+
+
+.form{
+    position: relative;
+}
+
+.form .fa-search{
+
+    position: absolute;
+    top:20px;
+    left: 20px;
+    color: #9ca3af;
+
+}
+
+.form span{
+
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    border-left: 1px solid #d1d5db;
+}
+
+.predict-label{
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #374151;
+    margin-bottom: 10px;
+}
+
+.tempo-input {
+    width: 35%;
+  }
+
+.duree-input {
+    width: 55%;
+    }
