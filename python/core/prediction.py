@@ -22,7 +22,7 @@ numeric_df = df.select_dtypes(include='number')
 
 #select only the 5000 songs with most popularity
 df = df.sort_values(by=['popularity'], ascending=False)
-df = df.head(5000)
+df = df.head(60000)
 
 #Function that plot the correlation matrix
 def plot_correlation_matrix(df):
@@ -161,11 +161,11 @@ print("R2 : ", r2_score(y_test, y_pred))
 #and the high R-squared value suggests that the model is capturing the patterns in the data effectively.
 
 #Can you do a cross validation to see if the model is overfitting or not?
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(model, X_train, y_train, cv=5)
-print("Vérification cross validation")
-print(scores)
-print("Mean cross validation score : ", scores.mean())
+#    from sklearn.model_selection import cross_val_score
+#    scores = cross_val_score(model, X_train, y_train, cv=5)
+#    print("Vérification cross validation")
+#    print(scores)
+#    print("Mean cross validation score : ", scores.mean())
 
 
 #All individual cross-validation scores are very close to each other, suggesting consistent performance across different subsets of the training data.

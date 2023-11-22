@@ -1,4 +1,72 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/prediction.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <form>
+                    <div class="mb-3">
+                      <label for="lyrics" class="predict-label">Paroles</label>
+                      <input type="text" class="form-control form-input" name="filter" placeholder="Insérez les paroles de votre chanson">
+                    </div>
+                    <div class="mb-3">
+                    <label for="genre" class="predict-label">Genre</label>
+                        <div class="mb-3" style="width:200px;">
+                            <select>
+                                {% for genre in genre %}
+                                    <option value="{{ genre }}">{{ genre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="predict-label">Titre</label>
+                        <input type="int" class="form-control form-input" name="filter" placeholder="Rentre le titre de la musique">
+                    </div>
+                    <div class="mb-3">
+                        <label for="artists" class="predict-label">Nom d'artiste</label>
+                        <input type="int" class="form-control form-input" name="filter" placeholder="Rentre le nom de l'artiste">
+                    </div>
+                    <div class="mb-3">
+                        <label for="tempo" class="predict-label">Tempo</label>
+                        <div class="tempo-input">
+                            <input type="float" class="form-control form-input" name="filter" placeholder="Rentre le tempo (bpm)">
+                        </div>
+                    </div>
+                    <label for="explicit" class="predict-label">Explcit</label>
+                        <div class="mb-3" style="width:200px;">
+                            <select>
+                                <option value="1">True</option>
+                                <option value="2">False</option>
+                            </select>
+                        </div>
+                    <label for="key" class="predict-label">Clé la plus présente</label>
+                    <div class="mb-3" style="width:200px;">
+                        <select>
+                            {% for key in note %}
+                                <option value="{{ key }}">{{ key }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="duree" class="predict-label">Durée</label>
+                        <div class="duree-input">
+                            <input type="int" class="form-control form-input" name="filter" placeholder="Rentre la durée de la musique en ms">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Effectuer une prédiction de popularité</button>
+
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 {% endblock %}

@@ -122,7 +122,7 @@ def get_most_pop_artists(file,genre):
     top_3_artists = unique_artists[:3] if len(unique_artists) >= 3 else unique_artists
     top_3_artists_list = top_3_artists.tolist()
     return top_3_artists_list
-
+    
 def get_most_pop_genres(file,artist):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]

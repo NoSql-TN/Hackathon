@@ -3,9 +3,10 @@
 
 {% block content %}
 <div class="page">
-    <link rel="stylesheet" href="../static/styles/searchbar.css">
+    <link rel="stylesheet" href="../static/styles/analyse-graph.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="stylesheet" href="../static/styles/analyse-stats.css">
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
@@ -44,8 +45,44 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Popularité moyenne</div>
                     <div class="card-body">
-                        <canvas id="popularityCanvas"></canvas>
-                        {{ stats[0] }} %
+                        <span class="popularite">{{ stats[0] }} %</span>
+                        <script>
+                            // int red = 255; //i.e. FF
+                            // int green = 0;
+                            // int stepSize = ?//how many colors do you want?
+                            // while(green < 255)
+                            // {
+                            //     green += stepSize;
+                            //     if(green > 255) { green = 255; }
+                            //     output(red, green, 0); //assume output is function that takes RGB
+                            // }
+                            // while(red > 0)
+                            // {
+                            //     red -= stepSize;
+                            //     if(red < 0) { red = 0; }
+                            //     output(red, green, 0); //assume output is function that takes RGB
+                            // }
+                            // adapt the above pseudo code to make the popularite span change color depending of the value of stats[0]
+
+                            var popularite = document.getElementsByClassName("popularite")[0];
+                            var populariteValue = parseInt(popularite.innerHTML);
+                            var red = 255;
+                            var green = 0;
+                            var stepSize = 255 / 100;
+                            var step = 0;
+                            while (step < populariteValue) {
+                                green += stepSize;
+                                if (green > 255) {
+                                    green = 255;
+                                }
+                                red -= stepSize;
+                                if (red < 0) {
+                                    red = 0;
+                                }
+                                step += 1;
+                            }
+                            popularite.style.color = "rgb(" + red + "," + green + ",0)";
+                        </script>
                     </div>
                 </div>
             </div>
@@ -53,7 +90,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Mots les plus utilisés</div>
                     <div class="card-body">
-                        <canvas id="wordsCanvas"></canvas>
                         Explicit content : {{ stats[3] }} %<br>
                         {% for word in stats[1] %}
                             {{ word[0] }}, {{ word[1] }}<br>
@@ -68,7 +104,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Genre et Artistes les plus connus</div>
                     <div class="card-body">
-                        <canvas id="artistgenresCanvas"></canvas>
                         {% for artiste in stats[11] %}
                             {{ artiste }}<br>
                         {% endfor %}
@@ -84,7 +119,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Genre</div>
                     <div class="card-body">
-                        <canvas id="artistgenresCanvas"></canvas>
                         {% for genre in stats[11] %}
                             {{ genre }}<br>
                         {% endfor %}
@@ -96,7 +130,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Artiste</div>
                     <div class="card-body">
-                        <canvas id="artistgenresCanvas"></canvas>
                         {% for artiste in stats[11] %}
                             {{ artiste }}<br>
                         {% endfor %}
@@ -108,7 +141,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Musicalité</div>
                     <div class="card-body">
-                        <canvas id="musicaliteCanvas"></canvas>
                         Danceability : {{ stats[4] }} %<br>
                         Speechiness : {{ stats[8] }} %<br>
                         Instrumentalness : {{ stats[9] }} %<br>
@@ -122,7 +154,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Rythmique</div>
                     <div class="card-body">
-                        <canvas id="rythmiqueCanvas"></canvas>
                         Tempo : {{ stats[10] }}<br>
                         Energy : {{ stats[6] }} %<br>
                     </div>
@@ -132,7 +163,6 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
                     <div class="card-header">Durée moyenne</div>
                     <div class="card-body">
-                        <canvas id="keyCanvas"></canvas>
                         {{ stats[2][0] }} s<br> 
                         {{ stats[2][1] }} min {{stats[2][2]}}s
                     </div>

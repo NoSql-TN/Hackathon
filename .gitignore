@@ -26,7 +26,7 @@ Thumbs.db
 venv/
 
 # Ignore large files 
-encoded_lyrics.csv
+encoded_columns.csv
 
 # Ignore data files
 static/data.json
@@ -36,3 +36,6 @@ static/data.json
 __pycache__/
 ```
 *.pyc
+
+#ignore the model
+finalized_model.sav
