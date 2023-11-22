@@ -7,32 +7,32 @@ nltk.download('stopwords')
 
 from python.database.get_db import get_db, get_db2
 
-
+db = get_db()
+file = pd.DataFrame(db)
+file = file.dropna()
+file = file.drop_duplicates()
+    
+db2 = get_db2()
+file2 = pd.DataFrame(db2)
+file2 = file2.dropna()
+file2 = file2.drop_duplicates()
+    
 def get_stats2(artist,genre):
     stats = []
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
-    
-    db2 = get_db2()
-    file2 = pd.DataFrame(db2)
-    file2 = file2.dropna()
-    file2 = file2.drop_duplicates()
     
     if artist == False:
-        popularity = get_popularity(False,genre)
-        top_5_most_used_lyrics = get_filtered_lyrics(get_db2(),False,genre)
-        duration = get_duration(False,genre)
-        explicit = get_explicit(False,genre)
-        danceability = get_danceability(False,genre)
-        key = get_key(False,genre)
-        energy = get_energy(False,genre)
-        loudness = get_loudness(False,genre)
-        speechiness = get_speechiness(False,genre)
-        instrumentalness = get_instrumentalness(False,genre)
-        tempo = get_tempo(False,genre)
-        most_pop_artists = get_most_pop_artists(genre)
+        popularity = get_popularity(file,False,genre)
+        top_5_most_used_lyrics = get_filtered_lyrics(file2,False,genre)
+        duration = get_duration(file,False,genre)
+        explicit = get_explicit(file,False,genre)
+        danceability = get_danceability(file,False,genre)
+        key = get_key(file,False,genre)
+        energy = get_energy(file,False,genre)
+        loudness = get_loudness(file,False,genre)
+        speechiness = get_speechiness(file,False,genre)
+        instrumentalness = get_instrumentalness(file,False,genre)
+        tempo = get_tempo(file,False,genre)
+        most_pop_artists = get_most_pop_artists(file,genre)
         
         stats.append(popularity)
         stats.append(top_5_most_used_lyrics)
@@ -48,18 +48,18 @@ def get_stats2(artist,genre):
         stats.append(most_pop_artists)
     elif genre == False:
 
-        popularity = get_popularity(artist,False)
-        top_5_most_used_lyrics = get_filtered_lyrics(get_db2(),artist,False)
-        duration = get_duration(artist,False)
-        explicit = get_explicit(artist,False)
-        danceability = get_danceability(artist,False)
-        key = get_key(artist,False)
-        energy = get_energy(artist,False)
-        loudness = get_loudness(artist,False)
-        speechiness = get_speechiness(artist,False)
-        instrumentalness = get_instrumentalness(artist,False)
-        tempo = get_tempo(artist,False)
-        most_pop_genres = get_most_pop_genres(artist)
+        popularity = get_popularity(file,artist,False)
+        top_5_most_used_lyrics = get_filtered_lyrics(file2,artist,False)
+        duration = get_duration(file,artist,False)
+        explicit = get_explicit(file,artist,False)
+        danceability = get_danceability(file,artist,False)
+        key = get_key(file,artist,False)
+        energy = get_energy(file,artist,False)
+        loudness = get_loudness(file,artist,False)
+        speechiness = get_speechiness(file,artist,False)
+        instrumentalness = get_instrumentalness(file,artist,False)
+        tempo = get_tempo(file,artist,False)
+        most_pop_genres = get_most_pop_genres(file,artist)
         
         stats.append(popularity)
         stats.append(top_5_most_used_lyrics)
@@ -77,29 +77,20 @@ def get_stats2(artist,genre):
         
 def get_stats():
     stats = []
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
     
-    db2 = get_db2()
-    file2 = pd.DataFrame(db2)
-    file2 = file2.dropna()
-    file2 = file2.drop_duplicates()
-    
-    popularity = get_popularity(False,False) #0
+    popularity = get_popularity(file,False,False) #0
     top_5_most_used_lyrics = get_filtered_lyrics(file2,False,False) #1
-    duration = get_duration(False,False) #2
-    explicit = get_explicit(False,False) #3
-    danceability = get_danceability(False,False) #4
-    key = get_key(False,False) #5
-    energy = get_energy(False,False) #6
-    loudness = get_loudness(False,False) #7
-    speechiness = get_speechiness(False,False) #8
-    instrumentalness = get_instrumentalness(False,False) #9
-    tempo = get_tempo(False,False) #10
-    most_pop_artists = get_most_pop_artists(False) #11
-    most_pop_genres = get_most_pop_genres(False) #12
+    duration = get_duration(file,False,False) #2
+    explicit = get_explicit(file,False,False) #3
+    danceability = get_danceability(file,False,False) #4
+    key = get_key(file,False,False) #5
+    energy = get_energy(file,False,False) #6
+    loudness = get_loudness(file,False,False) #7
+    speechiness = get_speechiness(file,False,False) #8
+    instrumentalness = get_instrumentalness(file,False,False) #9
+    tempo = get_tempo(file,False,False) #10
+    most_pop_artists = get_most_pop_artists(file,False) #11
+    most_pop_genres = get_most_pop_genres(file,False) #12
     
     stats.append(popularity)
     stats.append(top_5_most_used_lyrics)
@@ -116,11 +107,7 @@ def get_stats():
     stats.append(most_pop_genres)
     return stats
 
-def get_most_pop_artists(genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_most_pop_artists(file,genre):
     if genre:
         file = file[file['track_genre'] == genre]
     else:
@@ -129,15 +116,13 @@ def get_most_pop_artists(genre):
     file = file.sort_values(by=['popularity'], ascending=False)
     
     unique_artists = file['artists'].unique()
+    for i in range(len(unique_artists)):
+        unique_artists[i] = unique_artists[i].replace(";"," & ")
     top_3_artists = unique_artists[:3] if len(unique_artists) >= 3 else unique_artists
     top_3_artists_list = top_3_artists.tolist()
     return top_3_artists_list
-
-def get_most_pop_genres(artist):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+    
+def get_most_pop_genres(file,artist):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     else:
@@ -150,11 +135,7 @@ def get_most_pop_genres(artist):
     top_3_genres_list = top_3_genres.tolist()
     return top_3_genres_list
 
-def get_popularity(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_popularity(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -165,11 +146,7 @@ def get_popularity(artist,genre):
     popolarity = round(popularity,2)
     return popolarity
 
-def get_duration(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_duration(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -190,11 +167,7 @@ def get_duration(artist,genre):
     else:
         return [0,0,0]
 
-def get_danceability(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_danceability(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -205,13 +178,9 @@ def get_danceability(artist,genre):
     danceability = round(danceability,2)
     return danceability
 
-def get_key(artist,genre):
+def get_key(file,artist,genre):
     # 0 = C, 1 = C#, 2 = D, 3 = D#, 4 = E, 5 = F, 6 = F#, 7 = G, 8 = G#, 9 = A, 10 = A#, 11 = B
     dico = {0:"C",1:"C#",2:"D",3:"D#",4:"E",5:"F",6:"F#",7:"G",8:"G#",9:"A",10:"A#",11:"B"}
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -226,11 +195,7 @@ def get_key(artist,genre):
         key = "N/A"
     return key
 
-def get_energy(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_energy(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -241,11 +206,7 @@ def get_energy(artist,genre):
     energy = round(energy,2)
     return energy
 
-def get_loudness(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_loudness(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -256,11 +217,7 @@ def get_loudness(artist,genre):
     loudness = round(loudness,2)
     return loudness
 
-def get_speechiness(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_speechiness(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -271,11 +228,7 @@ def get_speechiness(artist,genre):
     speechiness = round(speechiness,2)
     return speechiness
 
-def get_instrumentalness(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_instrumentalness(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -286,11 +239,7 @@ def get_instrumentalness(artist,genre):
     instrumentalness = round(instrumentalness,2)
     return instrumentalness
 
-def get_tempo(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_tempo(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
@@ -324,11 +273,7 @@ def get_filtered_lyrics(file2,artist,genre):
     
     return top_5_words
 
-def get_explicit(artist,genre):
-    db = get_db()
-    file = pd.DataFrame(db)
-    file = file.dropna()
-    file = file.drop_duplicates()
+def get_explicit(file,artist,genre):
     if artist:
         file = file[file['artists'].str.contains(artist, case=False)]
     elif genre:
