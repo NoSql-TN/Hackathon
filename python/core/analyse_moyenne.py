@@ -112,9 +112,12 @@ def get_most_pop_artists(file,genre):
         file = file[file['track_genre'] == genre]
     else:
         file = file
+    # aggregate the popularity of each artist
+    file = file.groupby(['artists']).agg({'popularity': 'mean'}).reset_index()
     file["popularity"] = file["popularity"].astype(int)
     file = file.sort_values(by=['popularity'], ascending=False)
     
+
     unique_artists = file['artists'].unique()
     for i in range(len(unique_artists)):
         unique_artists[i] = unique_artists[i].replace(";"," & ")
@@ -174,8 +177,8 @@ def get_danceability(file,artist,genre):
         file = file[file['track_genre'] == genre]
     else:
         file = file 
-    danceability = file["danceability"].mean()
-    danceability = round(danceability,2)
+    danceability = file["danceability"].mean()*100
+    danceability = round(danceability,1)
     return danceability
 
 def get_key(file,artist,genre):
@@ -202,8 +205,8 @@ def get_energy(file,artist,genre):
         file = file[file['track_genre'] == genre]
     else:
         file = file 
-    energy = file["energy"].mean()
-    energy = round(energy,2)
+    energy = file["energy"].mean()*100
+    energy = round(energy,1)
     return energy
 
 def get_loudness(file,artist,genre):
@@ -224,8 +227,8 @@ def get_speechiness(file,artist,genre):
         file = file[file['track_genre'] == genre]
     else:
         file = file 
-    speechiness = file["speechiness"].mean()
-    speechiness = round(speechiness,2)
+    speechiness = file["speechiness"].mean()*100
+    speechiness = round(speechiness,1)
     return speechiness
 
 def get_instrumentalness(file,artist,genre):
@@ -235,8 +238,8 @@ def get_instrumentalness(file,artist,genre):
         file = file[file['track_genre'] == genre]
     else:
         file = file
-    instrumentalness = file["instrumentalness"].mean()
-    instrumentalness = round(instrumentalness,2)
+    instrumentalness = file["instrumentalness"].mean()*100
+    instrumentalness = round(instrumentalness,1)
     return instrumentalness
 
 def get_tempo(file,artist,genre):

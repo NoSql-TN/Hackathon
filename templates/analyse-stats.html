@@ -43,27 +43,10 @@
         <div class="row">
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Popularité moyenne</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Popularité moyenne</div>
                     <div class="card-body">
                         <span class="popularite">{{ stats[0] }} %</span>
                         <script>
-                            // int red = 255; //i.e. FF
-                            // int green = 0;
-                            // int stepSize = ?//how many colors do you want?
-                            // while(green < 255)
-                            // {
-                            //     green += stepSize;
-                            //     if(green > 255) { green = 255; }
-                            //     output(red, green, 0); //assume output is function that takes RGB
-                            // }
-                            // while(red > 0)
-                            // {
-                            //     red -= stepSize;
-                            //     if(red < 0) { red = 0; }
-                            //     output(red, green, 0); //assume output is function that takes RGB
-                            // }
-                            // adapt the above pseudo code to make the popularite span change color depending of the value of stats[0]
-
                             var popularite = document.getElementsByClassName("popularite")[0];
                             var populariteValue = parseInt(popularite.innerHTML);
                             var red = 255;
@@ -88,12 +71,13 @@
             </div>
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Mots les plus utilisés</div>
-                    <div class="card-body">
-                        Explicit content : {{ stats[3] }} %<br>
+                    <div class="card-header" style="font-size: 1.5rem;">Mots les plus utilisés</div>
+                    <div class="card-body top-container">
                         {% for word in stats[1] %}
-                            {{ word[0] }}, {{ word[1] }}<br>
+                            <span class="top">{{ loop.index }}: "{{ word[0] }}" with {{ word[1] }} uses</span>
                         {% endfor %}
+                        <br>
+                        <span class="explicit">{{ stats[3] }} % with explicit content. </span>
                     </div>
                 </div>
             </div>
@@ -102,14 +86,14 @@
             {% if name!="" and artiste=="" and genre==""%}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Genre et Artistes les plus connus</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Genre et Artistes les plus connus</div>
                     <div class="card-body">
                         {% for artiste in stats[11] %}
-                            {{ artiste }}<br>
+                            <span class="artiste">{{ artiste }}</span>
                         {% endfor %}
                         <hr>
                         {% for genre in stats[12] %}
-                            {{ genre }}<br>
+                            <span class="genre">{{genre }}</span> 
                         {% endfor %}
                     </div>
                 </div>
@@ -117,10 +101,10 @@
             {% elif artiste!="" %}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Genre</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Genre</div>
                     <div class="card-body">
                         {% for genre in stats[11] %}
-                            {{ genre }}<br>
+                            <span class="genre">{{genre }}</span> 
                         {% endfor %}
                     </div>
                 </div>
@@ -128,10 +112,10 @@
             {% else %}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Artiste</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Artiste</div>
                     <div class="card-body">
                         {% for artiste in stats[11] %}
-                            {{ artiste }}<br>
+                            <span class="artiste">{{ artiste }}</span>
                         {% endfor %}
                     </div>
                 </div>
@@ -139,12 +123,12 @@
             {% endif %}
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Musicalité</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Musicalité</div>
                     <div class="card-body">
-                        Danceability : {{ stats[4] }} %<br>
-                        Speechiness : {{ stats[8] }} %<br>
-                        Instrumentalness : {{ stats[9] }} %<br>
-                        Key : {{ stats[5] }}<br>
+                        <span class="danceability"> Danceability : {{ stats[4] }} %</span>
+                        <span class="speechiness"> Speechiness : {{ stats[8] }} %</span>
+                        <span class="instrumentalness"> Instrumentalness : {{ stats[9] }} %</span>
+                        <span class="key">Clé majoritaire : {{ stats[5] }}</span>
                     </div>
                 </div>
             </div>
@@ -152,19 +136,19 @@
         <div class="row">
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Rythmique</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Rythmique</div>
                     <div class="card-body">
-                        Tempo : {{ stats[10] }}<br>
-                        Energy : {{ stats[6] }} %<br>
+                        <span class="tempo">Tempo Moyen: {{ stats[10] }} BPM</span>
+                        <span class="energy">Energy : {{ stats[6] }} %</span> 
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card text-dark bg-light mb-3" style="max-width: 36rem;">
-                    <div class="card-header">Durée moyenne</div>
+                    <div class="card-header" style="font-size: 1.5rem;">Durée moyenne</div>
                     <div class="card-body">
-                        {{ stats[2][0] }} s<br> 
-                        {{ stats[2][1] }} min {{stats[2][2]}}s
+                        
+                        <span class="time">{{ stats[2][1] }} min {{stats[2][2]}}s ({{ stats[2][0] }} s)</span> 
                     </div>
                 </div>
             </div>

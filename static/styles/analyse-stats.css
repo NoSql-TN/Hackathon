@@ -1,3 +1,14 @@
+.top-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: left;
+}
+
+
 /* a span with a large text centered in the middle of its div */
 .popularite{
     position: relative;
@@ -8,5 +19,135 @@
     align-items: center;
     font-weight: 600;
     font-size: 3rem;
+}
 
+/* a span with a large text centered in the middle bottom of its div */
+.explicit{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.top{
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* a div with a large text centered in the middle of its div with a Caps in the first letter */
+.artiste{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.genre{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.tempo{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.energy{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.instrumentalness{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.speechiness{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.danceability{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.key{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
+
+.time{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-weight: 500;
+    font-size: 1.5rem;
 }
