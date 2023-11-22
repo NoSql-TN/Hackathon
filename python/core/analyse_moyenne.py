@@ -2,8 +2,9 @@ import nltk
 import pandas as pd
 from nltk.corpus import stopwords
 from collections import Counter
-nltk.download('punkt')
-nltk.download('stopwords')
+nltk.download('punkt',quiet=True)
+nltk.download('stopwords',quiet=True)
+
 
 from python.database.get_db import get_db, get_db2
 
