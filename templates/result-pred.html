@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<!-- The goal is to create a page that displays the result of the prediction store in {{score}} -->
+
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/result-pred.css">
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col align-items-center">
+                <div class="result">
+                    <h1 class="result-title">Votre chanson est un banger à</h1>
+                    <div class="result-content">
+                        <p class="result-text">{{score}}%</p>
+                    </div>
+                    <div class="button-container">
+                        <a href="/prediction" class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var popularite = document.getElementsByClassName("result-text")[0];
+        var populariteValue = parseInt(popularite.innerHTML);
+        var red = 255;
+        var green = 0;
+        var stepSize = 255 / 100;
+        var step = 0;
+        while (step < populariteValue) {
+            green += stepSize;
+            if (green > 255) {
+                green = 255;
+            }
+            red -= stepSize;
+            if (red < 0) {
+                red = 0;
+            }
+            step += 1;
+        }
+        popularite.style.color = "rgb(" + red + "," + green + ",0)";
+    </script>
+
+
+{% endblock %}

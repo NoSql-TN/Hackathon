@@ -9,15 +9,15 @@
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
-                <form>
+                <form action="/get-result" method="post">
                     <div class="mb-3">
                       <label for="lyrics" class="predict-label">Paroles</label>
-                      <input type="text" class="form-control form-input" name="filter" placeholder="Insérez les paroles de votre chanson">
+                      <input type="text" class="form-control form-input" name="paroles" placeholder="Insérez les paroles de votre chanson">
                     </div>
                     <div class="mb-3">
                     <label for="genre" class="predict-label">Genre</label>
                         <div class="mb-3" style="width:200px;">
-                            <select>
+                            <select name="genre">
                                 {% for genre in genre %}
                                     <option value="{{ genre }}">{{ genre }}</option>
                                 {% endfor %}
@@ -26,28 +26,28 @@
                     </div>
                     <div class="mb-3">
                         <label for="name" class="predict-label">Titre</label>
-                        <input type="int" class="form-control form-input" name="filter" placeholder="Rentre le titre de la musique">
+                        <input type="int" class="form-control form-input" name="track_name" placeholder="Rentre le titre de la musique">
                     </div>
                     <div class="mb-3">
                         <label for="artists" class="predict-label">Nom d'artiste</label>
-                        <input type="int" class="form-control form-input" name="filter" placeholder="Rentre le nom de l'artiste">
+                        <input type="int" class="form-control form-input" name="artist_name" placeholder="Rentre le nom de l'artiste">
                     </div>
                     <div class="mb-3">
                         <label for="tempo" class="predict-label">Tempo</label>
                         <div class="tempo-input">
-                            <input type="float" class="form-control form-input" name="filter" placeholder="Rentre le tempo (bpm)">
+                            <input type="float" class="form-control form-input" name="tempo" placeholder="Rentre le tempo (bpm)">
                         </div>
                     </div>
                     <label for="explicit" class="predict-label">Explcit</label>
                         <div class="mb-3" style="width:200px;">
-                            <select>
+                            <select name="explicit">
                                 <option value="1">True</option>
                                 <option value="2">False</option>
                             </select>
                         </div>
                     <label for="key" class="predict-label">Clé la plus présente</label>
                     <div class="mb-3" style="width:200px;">
-                        <select>
+                        <select name="key">
                             {% for key in note %}
                                 <option value="{{ key }}">{{ key }}</option>
                             {% endfor %}
@@ -56,7 +56,7 @@
                     <div class="mb-3">
                         <label for="duree" class="predict-label">Durée</label>
                         <div class="duree-input">
-                            <input type="int" class="form-control form-input" name="filter" placeholder="Rentre la durée de la musique en ms">
+                            <input type="int" class="form-control form-input" name="duration" placeholder="Rentre la durée de la musique en s">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Effectuer une prédiction de popularité</button>
