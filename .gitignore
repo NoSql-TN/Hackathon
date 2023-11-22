@@ -31,6 +31,9 @@ encoded_columns.csv
 # Ignore data files
 static/data.json
 
+# Ignore all model files
+models/
+
 ```
 # pycache
 __pycache__/

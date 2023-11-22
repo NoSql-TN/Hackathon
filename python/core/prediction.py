@@ -1,186 +1,109 @@
-import pandas as pd
-import numpy as np
-from sklearn import preprocessing
-import matplotlib.pyplot as plt
-from matplotlib.image import imread
-import seaborn as sns
-from sklearn.cluster import KMeans, SpectralClustering
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import silhouette_samples, silhouette_score, confusion_matrix
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import OneHotEncoder
-
-
-# Load your dataset
-db = pd.read_csv('dataset.csv', sep=',')
-df = pd.DataFrame(db)
-df = df.dropna()
-df = df.drop_duplicates()
-
-# Exclude non-numeric columns from the correlation analysis
-numeric_df = df.select_dtypes(include='number')
-
-#select only the 5000 songs with most popularity
-df = df.sort_values(by=['popularity'], ascending=False)
-df = df.head(5000)
-
-#Function that plot the correlation matrix
-def plot_correlation_matrix(df):
-    corr = numeric_df.corr()
-    mask = np.zeros_like(corr)
-    mask[np.triu_indices_from(mask)] = True
-    plt.figure(figsize=(12, 10))
-    sns.heatmap(corr, mask=mask, annot=True, fmt=".2f")
-    plt.title('Correlation Matrix')
-    plt.show()
-
-#plot_correlation_matrix(df)
-#change the track_id into 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15...
-df = df.reset_index(drop=True)
-print(df.head())
-
-
-
-
-#Unfortunately we expected some parameters with a high correlation with the popularity but we didn't find any. (Max = 0.13 danceability)
-
-#Maybe we can find some correlation between the parameters and the popularity if we use the clustering method
-
-# Select relevant columns
-selected_columns = ['danceability', 'energy', 'acousticness', 'instrumentalness', 'tempo',
-                    'duration_ms', 'popularity', 'track_genre', 'artists', 'explicit', 'key']
-
-df_selected = df[selected_columns]
-df_selected = df_selected.astype({'danceability': float , 'energy': float, 'acousticness': float, 'instrumentalness': float, 'tempo': float,
-                    'duration_ms': int, 'popularity': int, 'track_genre': str, 'artists': str, 'explicit': bool, 'key': int})
-
-
-
-
-
-# encode the genre column
-genre_encoder = OneHotEncoder(handle_unknown='ignore')
-genre_encoder.fit(df_selected[['track_genre']])
-genre_encoded = genre_encoder.transform(df_selected[['track_genre']]).toarray()
-genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
-# print the encoded genre column
-print("The encoded genre column is:")
-print(genre_encoded)
-# Drop original categorical columns
-#df_selected = df_selected.drop(['track_genre'], axis=1)
-print("Vérification encoder genre")
-
-
-#encode the artists column
-artists_encoder = OneHotEncoder(handle_unknown='ignore')
-artists_encoder.fit(df_selected[['artists']])
-artists_encoded = artists_encoder.transform(df_selected[['artists']]).toarray()
-artists_encoded = pd.DataFrame(artists_encoded, columns=artists_encoder.categories_)
-# print the encoded artists column
-print("The encoded artists column is:")
-print(artists_encoded)
-# Drop original categorical columns
-#df_selected = df_selected.drop(['artists'], axis=1)
-print("Vérification encoder artists")
-
-
-
-#for the encoding of the explicit column we need to convert the boolean to int so we don't need a OneHotEncoder
-#encode the explicit column with true becomes 1 and false becomes 0
-df_selected['explicit'] = df_selected['explicit'].astype(int)
-print("Vérification encoder explicit")
-print(df_selected['explicit'])
-
-print(df_selected)
-
-print(df_selected['popularity'])
-
-#Now all our parameters are well encoded, we can concatenate them to the dataframe
-df_selected = pd.concat([df_selected, genre_encoded, artists_encoded], axis=1)
-print(df_selected['popularity'])
-# Drop the original categorical columns from the encoded DataFrame
-df_selected = df_selected.drop(['track_genre', 'artists'], axis=1)
-print("Vérification concaténation")
-#some values are NaN so we need to replace them with 0
-print(df_selected['popularity'])
-
-df_selected = df_selected.fillna(0)
-
-
-
-
-#Train a model to predict the popularity
-#Split the dataset into training and testing sets
-from sklearn.model_selection import train_test_split
-X = df_selected.drop(['popularity'], axis=1)
-y = df_selected['popularity']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-print("Vérification split")
-print(X_train.head())
-print(y_train.head())
-
-#we need to convert the name of a column to string because we have a tuple in the name of a column
-X_train.columns = X_train.columns.astype(str)
-X_test.columns = X_test.columns.astype(str)
-
-
-#Feature names are only supported if all input features have string names, but your input has ['str', 'tuple'] as feature name / column name types. If you want feature names to be stored and validated, you must convert them all to strings, by using X.columns = X.columns.astype(str) for example. Otherwise you can remove feature / column names from your input data, or convert them all to a non-string data type.
-#https://stackoverflow.com/questions/49545947/feature-names-are-only-supported-if-all-input-features-have-string-names-but-yo
-
-
-#create a model and train it in order to predict the popularity
-from sklearn.ensemble import RandomForestRegressor
-model = RandomForestRegressor(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
-print("Vérification modèle")
-print(model)
-
-#Predict the popularity
-y_pred = model.predict(X_test)
-print("Vérification prédiction")
-print(y_pred)
-print(y_pred[0])
-print(y_test.iloc[0])
-print(y_pred[10])
-print(y_test.iloc[10])
-print(y_pred[20])
-print(y_test.iloc[20])
-
-#Evaluate the model
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import r2_score
-print("Vérification évaluation")
-print("MSE : ", mean_squared_error(y_test, y_pred))
-print("MAE : ", mean_absolute_error(y_test, y_pred))
-print("R2 : ", r2_score(y_test, y_pred))
-
-
-#Overall, based on these metrics, thte Random Forest model seems to be performing very well on the test set. 
-#The low values of MSE and MAE indicate that the predictions are generally close to the actual values, 
-#and the high R-squared value suggests that the model is capturing the patterns in the data effectively.
-
-#Can you do a cross validation to see if the model is overfitting or not?
-from sklearn.model_selection import cross_val_score
-scores = cross_val_score(model, X_train, y_train, cv=5)
-print("Vérification cross validation")
-print(scores)
-print("Mean cross validation score : ", scores.mean())
-
-
-#All individual cross-validation scores are very close to each other, suggesting consistent performance across different subsets of the training data.
-#The high mean cross-validation score (close to 1) indicates that your model generalizes well to new, unseen data. It consistently performs at a high level across different training subsets.
-
-#save the model
 import pickle
-filename = 'finalized_model.sav'
-pickle.dump(model, open(filename, 'wb'))
-print("Vérification sauvegarde modèle")
+from python.utils.Generate_encoded_lyrics import preprocess_text
+import numpy as np
+import pandas as pd
+from keras.models import load_model
 
-#load the model
-loaded_model = pickle.load(open(filename, 'rb'))
-result = loaded_model.score(X_test, y_test)
-print("Vérification chargement modèle")
-print(result)
+def predict_popularity(data):
+    lyrics = data['lyrics']
+    genre = data['genre']
+    artist_name = data['artist_name']
+    track_name = data['track_name']
+    tempo = data['tempo']
+    key = data['clé']
+    explicit = data['explicit']
+    duration = data['duration']
 
+    # first we need to get the encoded lyrics, the genre, the artist_name and the track_name
+    
+    # all the encoders are loaded from the pickle files
+    lyrics_encoder = pickle.load(open('models/lyrics_encoder.pkl', 'rb'))
+    genre_encoder = pickle.load(open('models/genre_encoder.pkl', 'rb'))
+    artist_name_encoder = pickle.load(open('models/artist_name_encoder.pkl', 'rb'))
+    track_name_encoder = pickle.load(open('models/track_name_encoder.pkl', 'rb'))
+    
+    # we need to preprocess the lyrics, the genre, the artist_name and the track_name
+    preprocessed_lyrics =  preprocess_text(lyrics)
+    preprocessed_genre = preprocess_text(genre)
+    preprocessed_artist_name = preprocess_text(artist_name)
+    preprocessed_track_name = preprocess_text(track_name)
+    
+    # Encoding the lyrics
+    lyrics_encoded = lyrics_encoder.transform([preprocessed_lyrics]).toarray()
+    feature_array = np.array(lyrics_encoder.get_feature_names_out())
+    tfidf_sorting = np.argsort(lyrics_encoder.idf_)[::-1]
+    top_n = feature_array[tfidf_sorting][:1000]
 
+    lyrics_encoded = pd.DataFrame(lyrics_encoded, columns=lyrics_encoder.get_feature_names_out())
+    lyrics_encoded = lyrics_encoded[top_n]
+
+    # Encoding the genre
+    genre_encoded = genre_encoder.transform([[preprocessed_genre]]).toarray()
+    genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
+    
+    # Encoding the artist_name
+    artist_name_encoded = artist_name_encoder.transform([[preprocessed_artist_name]]).toarray()
+    artist_name_encoded = pd.DataFrame(artist_name_encoded, columns=artist_name_encoder.categories_)
+    artist_name_encoded = artist_name_encoded[artist_name_encoded.sum().sort_values(ascending=False).index]
+    artist_name_encoded = artist_name_encoded.iloc[:, :100]
+    
+    # Encoding the track_name
+    track_name_encoded = track_name_encoder.transform([preprocessed_track_name]).toarray()
+    track_name_encoded = pd.DataFrame(track_name_encoded, columns=track_name_encoder.get_feature_names_out())
+    track_name_encoded = track_name_encoded[track_name_encoded.sum().sort_values(ascending=False).index]
+    track_name_encoded = track_name_encoded.iloc[:, :500]
+    
+    lyrics_length = len(preprocessed_lyrics.split())
+    lyrics_length = pd.DataFrame([lyrics_length], columns=['lyrics_length'])
+    
+    
+    model = load_model('models/from_lyrics.keras')
+    
+    X = pd.concat([genre_encoded, artist_name_encoded, track_name_encoded, lyrics_encoded, lyrics_length], axis=1)
+
+    prediction = model.predict(X)
+    # extract the 4 predictions
+    danceability = pd.DataFrame([prediction[0][0]], columns=['danceability'])
+    energy = pd.DataFrame([prediction[0][1]], columns=['energy'])
+    acousticness = pd.DataFrame([prediction[0][2]], columns=['acousticness'])
+    instrumentalness = pd.DataFrame([prediction[0][3]], columns=['instrumentalness'])
+    print(danceability, energy, acousticness, instrumentalness)
+    
+    # importat the new encoder
+    genre_encoder_pop = pickle.load(open('models/genre_encoder_pop.pkl', 'rb'))
+    artist_name_encoder_pop = pickle.load(open('models/artists_encoder_pop.pkl', 'rb'))
+    
+    genre_encoded_pop = genre_encoder_pop.transform([[genre]]).toarray()
+    genre_encoded_pop = pd.DataFrame(genre_encoded_pop, columns=genre_encoder_pop.categories_)
+    print(genre_encoded_pop)
+    
+    artist_name_encoded_pop = artist_name_encoder_pop.transform([[artist_name]]).toarray()
+    artist_name_encoded_pop = pd.DataFrame(artist_name_encoded_pop, columns=artist_name_encoder_pop.categories_)
+    print(artist_name_encoded_pop)
+    
+    duration = pd.DataFrame([duration], columns=['duration_ms'])
+    explicit = pd.DataFrame([explicit], columns=['explicit'])
+    explicit = explicit.astype(int)
+    key = pd.DataFrame([key], columns=['key'])
+    tempo = pd.DataFrame([tempo], columns=['tempo'])
+    
+    # concatenate the encoded columns with the other columns, explicit, key, tempo, duration
+    X = pd.concat([danceability, energy, acousticness, instrumentalness, tempo, duration, explicit, key, genre_encoded_pop, artist_name_encoded_pop], axis=1)
+    
+    # load the model with pickle
+    loaded_model = pickle.load(open('models/finalized_model.sav', 'rb'))
+    
+    # predict the popularity
+    X=X.astype(float)
+    X.columns = X.columns.astype(str)
+
+    prediction = loaded_model.predict(X)
+    
+    return prediction[0]
+    
+
+    
+    
+    
+    
+    

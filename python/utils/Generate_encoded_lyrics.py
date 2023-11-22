@@ -5,6 +5,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.preprocessing import  OneHotEncoder
+import pickle
+
 
 nltk.download('stopwords')
 nltk.download('punkt')
@@ -24,89 +27,92 @@ def preprocess_text(text):
 
 
 
-
-# Load your dataset
-# Assuming your dataset is in a CSV file named 'your_dataset.csv'
-data = pd.read_csv('tcc_ceds_music.csv')
-data = data.drop('id', axis=1)
-
-
-
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-
-# Assuming your dataframe is named 'df'
-
-# Keep as input only those columns: artist_name,track_name,genre,lyrics,len
-X = data[['artist_name','track_name','genre','lyrics','len']]
-X = X.astype({'artist_name': str,'track_name': str,'genre': str,'lyrics': str})
-
-# Keep as output only the column danceability, energy,accousticness,instrumentalness
-y = data[['danceability','energy','acousticness','instrumentalness']]
+if __name__ == "__main__":
+    # Load your dataset
+    # Assuming your dataset is in a CSV file named 'your_dataset.csv'
+    data = pd.read_csv('tcc_ceds_music.csv')
+    data = data.drop('id', axis=1)
 
 
-# encode the genre column
-genre_encoder = OneHotEncoder(handle_unknown='ignore')
-genre_encoder.fit(X[['genre']])
-genre_encoded = genre_encoder.transform(X[['genre']]).toarray()
-genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
-# print the encoded genre column
-print("Genre encoded")
-
-# encode the artist_name column
-artist_name_encoder =  OneHotEncoder(handle_unknown='ignore')
-artist_name_encoder.fit(X[['artist_name']])
-artist_name_encoded = artist_name_encoder.transform(X[['artist_name']]).toarray()
-artist_name_encoded = pd.DataFrame(artist_name_encoded, columns=artist_name_encoder.categories_)
-# keep only the 100 most important artists
-artist_name_encoded = artist_name_encoded[artist_name_encoded.sum().sort_values(ascending=False).index]
-artist_name_encoded = artist_name_encoded.iloc[:, :100]
-
-print("Artist name encoded")
-
-#Apply preprocessing to each element of the track_name column
-preprocessed_track_name = X['track_name'].apply(preprocess_text)
-preprocessed_track_name = preprocessed_track_name.astype(str)
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(preprocessed_track_name)
-track_name_encoded = tfidf_matrix.toarray()
-track_name_encoded = pd.DataFrame(track_name_encoded, columns=vectorizer.get_feature_names_out())
-# keep only the 500 most important words
-track_name_encoded = track_name_encoded[track_name_encoded.sum().sort_values(ascending=False).index]
-track_name_encoded = track_name_encoded.iloc[:, :500]
 
 
-print("Track name encoded")
+    # Assuming your dataframe is named 'df'
+
+    # Keep as input only those columns: artist_name,track_name,genre,lyrics,len
+    X = data[['artist_name','track_name','genre','lyrics','len']]
+    X = X.astype({'artist_name': str,'track_name': str,'genre': str,'lyrics': str})
+
+    # Keep as output only the column danceability, energy,accousticness,instrumentalness
+    y = data[['danceability','energy','acousticness','instrumentalness']]
 
 
-preprocessed_lyrics =  X['lyrics'].apply(preprocess_text)
-# convert if needed the preprocessed_lyrics column to a string type
-preprocessed_lyrics = preprocessed_lyrics.astype(str)
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(preprocessed_lyrics)
-feature_array = np.array(vectorizer.get_feature_names_out())
-tfidf_sorting = np.argsort(vectorizer.idf_)[::-1]
-top_n = feature_array[tfidf_sorting][:1000]
 
-print("Top n")
-print(top_n)
+    # encode the genre column
+    genre_encoder = OneHotEncoder(handle_unknown='ignore')
+    genre_encoder.fit(X[['genre']])
+    # save the encoder in a pickle file
+    pickle.dump(genre_encoder, open('genre_encoder.pkl', 'wb'))
+    genre_encoded = genre_encoder.transform(X[['genre']]).toarray()
+    genre_encoded = pd.DataFrame(genre_encoded, columns=genre_encoder.categories_)
+    # print the encoded genre column
+    print("Genre encoded")
 
-lyrics_encoded = tfidf_matrix.toarray()
-lyrics_encoded = pd.DataFrame(lyrics_encoded, columns=vectorizer.get_feature_names_out())
-# keep only the 1000 most important words
-lyrics_encoded = lyrics_encoded[top_n]
+    # encode the artist_name column
+    artist_name_encoder =  OneHotEncoder(handle_unknown='ignore')
+    artist_name_encoder.fit(X[['artist_name']])
+    pickle.dump(artist_name_encoder, open('artist_name_encoder.pkl', 'wb'))
+    artist_name_encoded = artist_name_encoder.transform(X[['artist_name']]).toarray()
+    artist_name_encoded = pd.DataFrame(artist_name_encoded, columns=artist_name_encoder.categories_)
+    # keep only the 100 most important artists
+    artist_name_encoded = artist_name_encoded[artist_name_encoded.sum().sort_values(ascending=False).index]
+    artist_name_encoded = artist_name_encoded.iloc[:, :100]
+
+    print("Artist name encoded")
+
+    #Apply preprocessing to each element of the track_name column
+    preprocessed_track_name = X['track_name'].apply(preprocess_text)
+    preprocessed_track_name = preprocessed_track_name.astype(str)
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(preprocessed_track_name)
+    pickle.dump(vectorizer, open('track_name_encoder.pkl', 'wb'))
+    track_name_encoded = tfidf_matrix.toarray()
+    track_name_encoded = pd.DataFrame(track_name_encoded, columns=vectorizer.get_feature_names_out())
+    # keep only the 500 most important words
+    track_name_encoded = track_name_encoded[track_name_encoded.sum().sort_values(ascending=False).index]
+    track_name_encoded = track_name_encoded.iloc[:, :500]
 
 
-print("Lyrics encoded")
+    print("Track name encoded")
 
-# Concatenate all the encoded columns with len column
-X = pd.concat([genre_encoded, artist_name_encoded, track_name_encoded, lyrics_encoded, X['len']], axis=1)
 
-# save the encoded columns in a csv file
-X.to_csv('encoded_columns.csv', index=False)
+    preprocessed_lyrics =  X['lyrics'].apply(preprocess_text)
+    # convert if needed the preprocessed_lyrics column to a string type
+    preprocessed_lyrics = preprocessed_lyrics.astype(str)
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(preprocessed_lyrics)
+    pickle.dump(vectorizer, open('lyrics_encoder.pkl', 'wb'))
+    feature_array = np.array(vectorizer.get_feature_names_out())
+    tfidf_sorting = np.argsort(vectorizer.idf_)[::-1]
+    top_n = feature_array[tfidf_sorting][:1000]
 
-print("X encoded")
-print(X.head())
+    print("Top n")
+    print(top_n)
 
+    lyrics_encoded = tfidf_matrix.toarray()
+    lyrics_encoded = pd.DataFrame(lyrics_encoded, columns=vectorizer.get_feature_names_out())
+    # keep only the 1000 most important words
+    lyrics_encoded = lyrics_encoded[top_n]
+
+
+    print("Lyrics encoded")
+
+    # Concatenate all the encoded columns with len column
+    X = pd.concat([genre_encoded, artist_name_encoded, track_name_encoded, lyrics_encoded, X['len']], axis=1)
+
+    # save the encoded columns in a csv file
+    X.to_csv('encoded_columns.csv', index=False)
+
+    print("X encoded")
+    print(X.head())
+
+#
