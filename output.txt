@@ -1,0 +1,127 @@
+X Loaded
+Y Loaded
+Train and Test split
+Model: LinearRegression, Parameters: {}, R2: 0.23726650508145997, MSE: 0.023077582792241324, MAE: 0.12216966026534755
+Model: Ridge, Parameters: {'alpha': 0.1}, R2: 0.23801571398110377, MSE: 0.023054914415245424, MAE: 0.12212332022219644
+Model: Ridge, Parameters: {'alpha': 1.0}, R2: 0.23961467482787258, MSE: 0.023006535588868067, MAE: 0.12203227631386705
+Model: Ridge, Parameters: {'alpha': 10.0}, R2: 0.2433062801973257, MSE: 0.022894840836877484, MAE: 0.12200435913542275
+Model: Ridge, Parameters: {'alpha': 100.0}, R2: 0.22224372824890548, MSE: 0.023532118194753922, MAE: 0.12419279464198345
+Model: Lasso, Parameters: {'alpha': 0.1}, R2: 0.06447687083609, MSE: 0.028305578044192984, MAE: 0.13664246088280813
+Model: Lasso, Parameters: {'alpha': 1.0}, R2: 0.05237284366865558, MSE: 0.02867180253929771, MAE: 0.13782725564354947
+Model: Lasso, Parameters: {'alpha': 10.0}, R2: -0.00044697657691528114, MSE: 0.030269941054138532, MAE: 0.14148750362104798
+Model: Lasso, Parameters: {'alpha': 100.0}, R2: -0.00044697657691528114, MSE: 0.030269941054138532, MAE: 0.14148750362104798
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 5}, R2: 0.20050428730906122, MSE: 0.024189875788315326, MAE: 0.12579226123185472
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 10}, R2: 0.20726018596787377, MSE: 0.02398546650030918, MAE: 0.12480147889994306
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 15}, R2: 0.1938498660780943, MSE: 0.024391214732933836, MAE: 0.12549013814055374
+Model: DecisionTreeRegressor, Parameters: {'max_depth': None}, R2: -0.2470467400547789, MSE: 0.03773116636562865, MAE: 0.15459026528833575
+Model: RandomForestRegressor, Parameters: {'n_estimators': 10}, R2: 0.06270998841437003, MSE: 0.028359037575789604, MAE: 0.13419171224816726
+Model: RandomForestRegressor, Parameters: {'n_estimators': 50}, R2: 0.09849952449522015, MSE: 0.027276174442723792, MAE: 0.13216921242961838
+Model: RandomForestRegressor, Parameters: {'n_estimators': 100}, R2: 0.10285103983096933, MSE: 0.027144513179515224, MAE: 0.13175459064411782
+Model: RandomForestRegressor, Parameters: {'n_estimators': 200}, R2: 0.10632483419189742, MSE: 0.027039408608257213, MAE: 0.1313920631823884
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.1}, R2: 0.22523568134775152, MSE: 0.023441592413718838, MAE: 0.12401604734417784
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.1}, R2: 0.2359157542047915, MSE: 0.023118451674223935, MAE: 0.12296119949668528
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.01}, R2: 0.11285066948084033, MSE: 0.02684196021353948, MAE: 0.1335299646963386
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.01}, R2: 0.15968713458393657, MSE: 0.0254248565878123, MAE: 0.12976311783727196
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 3}, R2: -0.06216453685498191, MSE: 0.03213729330304474, MAE: 0.1432449238374833
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 5}, R2: 0.05931828315608878, MSE: 0.028461658424914927, MAE: 0.13480708300193092
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 7}, R2: 0.09861139042348743, MSE: 0.027272789780533893, MAE: 0.131567771688236
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 10}, R2: 0.13045374842396784, MSE: 0.026309354114010874, MAE: 0.13023736826008606
+Model: BayesianRidge, Parameters: {}, R2: 0.24337509569052584, MSE: 0.022892758726609223, MAE: 0.12195179517712598
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.0001}, R2: 0.20872092120146746, MSE: 0.023941269885744087, MAE: 0.12465994990509438
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.001}, R2: 0.20610522556916522, MSE: 0.024020411463917736, MAE: 0.12480547247423196
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.0001}, R2: 0.20768535841797764, MSE: 0.02397260230530054, MAE: 0.12481281110298421
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.001}, R2: 0.2208554537012477, MSE: 0.023574122408578774, MAE: 0.12408308504764053
+Model: LinearRegression, Parameters: {}, R2: 0.25345210013259034, MSE: 0.04455783684025447, MAE: 0.17215202170567265
+Model: Ridge, Parameters: {'alpha': 0.1}, R2: 0.2541566171074392, MSE: 0.04451578762623608, MAE: 0.17208491236342544
+Model: Ridge, Parameters: {'alpha': 1.0}, R2: 0.2558770648915738, MSE: 0.04441310241116647, MAE: 0.1719961441485797
+Model: Ridge, Parameters: {'alpha': 10.0}, R2: 0.25784615726672633, MSE: 0.04429557680190414, MAE: 0.17260742386298855
+Model: Ridge, Parameters: {'alpha': 100.0}, R2: 0.2150964327126902, MSE: 0.04684710129481727, MAE: 0.1796591212179791
+Model: Lasso, Parameters: {'alpha': 0.1}, R2: 0.05238580311746155, MSE: 0.056558512561216814, MAE: 0.1999603986032436
+Model: Lasso, Parameters: {'alpha': 1.0}, R2: 0.04191200154349284, MSE: 0.05718364316799099, MAE: 0.20157950612898295
+Model: Lasso, Parameters: {'alpha': 10.0}, R2: -0.00011543872738828398, MSE: 0.05969205800210418, MAE: 0.20669699540195827
+Model: Lasso, Parameters: {'alpha': 100.0}, R2: -0.00011543872738828398, MSE: 0.05969205800210418, MAE: 0.20669699540195827
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 5}, R2: 0.18159910590767137, MSE: 0.0488463948734715, MAE: 0.18197867890616481
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 10}, R2: 0.20212781265887014, MSE: 0.04762113556174642, MAE: 0.17834099813700408
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 15}, R2: 0.19991376367376412, MSE: 0.047753281447432, MAE: 0.1778472580502298
+Model: DecisionTreeRegressor, Parameters: {'max_depth': None}, R2: -0.15683193360779124, MSE: 0.06904570833090126, MAE: 0.20912273994085437
+Model: RandomForestRegressor, Parameters: {'n_estimators': 10}, R2: 0.12906550817194085, MSE: 0.05198187148114259, MAE: 0.18373930352308504
+Model: RandomForestRegressor, Parameters: {'n_estimators': 50}, R2: 0.14509307423035023, MSE: 0.051025263507958496, MAE: 0.18223779201860676
+Model: RandomForestRegressor, Parameters: {'n_estimators': 100}, R2: 0.15576175328557051, MSE: 0.050388501605972066, MAE: 0.18071657921717338
+Model: RandomForestRegressor, Parameters: {'n_estimators': 200}, R2: 0.1556213628216332, MSE: 0.050396880834400894, MAE: 0.1809633120283036
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.1}, R2: 0.21165543371041617, MSE: 0.047052477898432435, MAE: 0.18020213472192942
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.1}, R2: 0.23141695239937932, MSE: 0.045873008335106574, MAE: 0.1772479622371176
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.01}, R2: 0.09375507243881531, MSE: 0.05408938077081353, MAE: 0.19621135757703198
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.01}, R2: 0.1388063262886582, MSE: 0.051400489115172004, MAE: 0.190472006186682
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 3}, R2: -0.06379024860770244, MSE: 0.06349249972859643, MAE: 0.2035060680858977
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 5}, R2: 0.036582623779051526, MSE: 0.05750172797531578, MAE: 0.19570787422421718
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 7}, R2: 0.07942820443834941, MSE: 0.05494448229465414, MAE: 0.19186921765177994
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 10}, R2: 0.10646699278929894, MSE: 0.053330667668809284, MAE: 0.18953380832040875
+Model: BayesianRidge, Parameters: {}, R2: 0.25857805137038314, MSE: 0.04425189357935287, MAE: 0.1720663564785481
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.0001}, R2: 0.2008810814281521, MSE: 0.047695546924730436, MAE: 0.17934114846072785
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.001}, R2: 0.22231380483972574, MSE: 0.046416331226735955, MAE: 0.17574153897504555
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.0001}, R2: 0.22400143354864432, MSE: 0.04631560482368496, MAE: 0.1759871629585465
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.001}, R2: 0.20681197502016646, MSE: 0.04734156054416889, MAE: 0.17954018715751274
+Model: LinearRegression, Parameters: {}, R2: 0.2853698095339058, MSE: 0.07517040315725404, MAE: 0.2261347484185608
+Model: Ridge, Parameters: {'alpha': 0.1}, R2: 0.286089722533893, MSE: 0.07509467706679614, MAE: 0.22608244663462282
+Model: Ridge, Parameters: {'alpha': 1.0}, R2: 0.28799411761898075, MSE: 0.07489435786922155, MAE: 0.2259764117700806
+Model: Ridge, Parameters: {'alpha': 10.0}, R2: 0.28994728070177433, MSE: 0.0746889088715103, MAE: 0.2273549888411362
+Model: Ridge, Parameters: {'alpha': 100.0}, R2: 0.23658925886772164, MSE: 0.08030152371265394, MAE: 0.24094371257044772
+Model: Lasso, Parameters: {'alpha': 0.1}, R2: 0.0541642376726178, MSE: 0.09949041689426265, MAE: 0.2740755908139482
+Model: Lasso, Parameters: {'alpha': 1.0}, R2: 0.04901835778939101, MSE: 0.1000317008626445, MAE: 0.27673708158958427
+Model: Lasso, Parameters: {'alpha': 10.0}, R2: -3.0365926935171927e-06, MSE: 0.10518815524729433, MAE: 0.28633174486543633
+Model: Lasso, Parameters: {'alpha': 100.0}, R2: -3.0365926935171927e-06, MSE: 0.10518815524729433, MAE: 0.28633174486543633
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 5}, R2: 0.1910855646946893, MSE: 0.08508795882519837, MAE: 0.24564108522865852
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 10}, R2: 0.2312128285219086, MSE: 0.08086705878524592, MAE: 0.2360744098351286
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 15}, R2: 0.22755372027078458, MSE: 0.08125195246326647, MAE: 0.23354923172576175
+Model: DecisionTreeRegressor, Parameters: {'max_depth': None}, R2: -0.1265639944134347, MSE: 0.11850082850162239, MAE: 0.2637786232306766
+Model: RandomForestRegressor, Parameters: {'n_estimators': 10}, R2: 0.13714005205017843, MSE: 0.09076237055326687, MAE: 0.23930631547269618
+Model: RandomForestRegressor, Parameters: {'n_estimators': 50}, R2: 0.15764887252258075, MSE: 0.08860509211225287, MAE: 0.237935865114495
+Model: RandomForestRegressor, Parameters: {'n_estimators': 100}, R2: 0.1661529883943038, MSE: 0.08771056256801897, MAE: 0.23698759529361124
+Model: RandomForestRegressor, Parameters: {'n_estimators': 200}, R2: 0.16608685868801365, MSE: 0.08771751860870801, MAE: 0.236853988998572
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.1}, R2: 0.22590903555545383, MSE: 0.0814249532891025, MAE: 0.24465477546923967
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.1}, R2: 0.25468348689044684, MSE: 0.07839823102584424, MAE: 0.2378835058059422
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.01}, R2: 0.09103659831344102, MSE: 0.09561189307633859, MAE: 0.2720637536584941
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.01}, R2: 0.1367192400000644, MSE: 0.09080663486211152, MAE: 0.2636977935397871
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 3}, R2: -0.06691855653986423, MSE: 0.11222685397428962, MAE: 0.264176676971494
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 5}, R2: 0.04717391761083556, MSE: 0.10022571353335327, MAE: 0.25506807248683044
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 7}, R2: 0.07844509158794033, MSE: 0.09693636641869184, MAE: 0.2533990437813435
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 10}, R2: 0.10384244811837262, MSE: 0.09426487344933387, MAE: 0.2523990966457679
+Model: BayesianRidge, Parameters: {}, R2: 0.2908495374205232, MSE: 0.0745940024398978, MAE: 0.22622662228901672
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.0001}, R2: 0.2013046705643634, MSE: 0.08401303319460188, MAE: 0.2288411380590492
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.001}, R2: 0.2076441305231057, MSE: 0.08334619912118116, MAE: 0.2305664918615019
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.0001}, R2: 0.26279170685421294, MSE: 0.07754534491538413, MAE: 0.22827355571328253
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.001}, R2: 0.2653583318319699, MSE: 0.07727536718857464, MAE: 0.22594868971397203
+Model: LinearRegression, Parameters: {}, R2: 0.13681784636990846, MSE: 0.03830910691086533, MAE: 0.11358329727528135
+Model: Ridge, Parameters: {'alpha': 0.1}, R2: 0.13783471051839902, MSE: 0.0382639772042159, MAE: 0.11393004910613007
+Model: Ridge, Parameters: {'alpha': 1.0}, R2: 0.14009742598548314, MSE: 0.03816355505302469, MAE: 0.11350372618044287
+Model: Ridge, Parameters: {'alpha': 10.0}, R2: 0.14488456778522407, MSE: 0.03795109569409042, MAE: 0.11194696163800749
+Model: Ridge, Parameters: {'alpha': 100.0}, R2: 0.12564749359498195, MSE: 0.038804861181139697, MAE: 0.11320638734917118
+Model: Lasso, Parameters: {'alpha': 0.1}, R2: 0.0027000602256699313, MSE: 0.044261422521702225, MAE: 0.12748318874691947
+Model: Lasso, Parameters: {'alpha': 1.0}, R2: -8.298376941162644e-07, MSE: 0.04438129141120228, MAE: 0.12816349323630358
+Model: Lasso, Parameters: {'alpha': 10.0}, R2: -8.298376941162644e-07, MSE: 0.04438129141120228, MAE: 0.12816349323630358
+Model: Lasso, Parameters: {'alpha': 100.0}, R2: -8.298376941162644e-07, MSE: 0.04438129141120228, MAE: 0.12816349323630358
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 5}, R2: 0.1286243374289091, MSE: 0.038672745117095425, MAE: 0.11258732501731843
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 10}, R2: 0.13637990352064777, MSE: 0.038328543363950716, MAE: 0.1092500046856495
+Model: DecisionTreeRegressor, Parameters: {'max_depth': 15}, R2: 0.10254571512202881, MSE: 0.039830147092843965, MAE: 0.10911285384509174
+Model: DecisionTreeRegressor, Parameters: {'max_depth': None}, R2: -0.4156038978952039, MSE: 0.06282627697970807, MAE: 0.13298419792297586
+Model: RandomForestRegressor, Parameters: {'n_estimators': 10}, R2: -0.1195498717811736, MSE: 0.04968702787672577, MAE: 0.12948316229850515
+Model: RandomForestRegressor, Parameters: {'n_estimators': 50}, R2: -0.09652923022520943, MSE: 0.04866534292319038, MAE: 0.13001675861090928
+Model: RandomForestRegressor, Parameters: {'n_estimators': 100}, R2: -0.08084505458348512, MSE: 0.047969259531126775, MAE: 0.12909815474399405
+Model: RandomForestRegressor, Parameters: {'n_estimators': 200}, R2: -0.08101968842702045, MSE: 0.047977010000195344, MAE: 0.12916959421960342
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.1}, R2: 0.14714965165724703, MSE: 0.037850568430116666, MAE: 0.11220875321630777
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.1}, R2: 0.15468574022824555, MSE: 0.037516107364694955, MAE: 0.11091540296393683
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 50, 'learning_rate': 0.01}, R2: 0.07511073306150895, MSE: 0.04104774601612353, MAE: 0.12227754620775605
+Model: GradientBoostingRegressor, Parameters: {'n_estimators': 100, 'learning_rate': 0.01}, R2: 0.1075555499696873, MSE: 0.03960780433705644, MAE: 0.11873358385251681
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 3}, R2: -0.29683595379836003, MSE: 0.05755520661656953, MAE: 0.13464851121653676
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 5}, R2: -0.12218104533968788, MSE: 0.04980380266027553, MAE: 0.13109988721860566
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 7}, R2: -0.051836907356347606, MSE: 0.04668184156408808, MAE: 0.12888723400172747
+Model: KNeighborsRegressor, Parameters: {'n_neighbors': 10}, R2: -0.00647337475426224, MSE: 0.044668551074937696, MAE: 0.12731763580837896
+Model: BayesianRidge, Parameters: {}, R2: 0.14489713993052666, MSE: 0.0379505377265091, MAE: 0.1119610086593926
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.0001}, R2: -0.13737429800170964, MSE: 0.05047809827459683, MAE: 0.07977447224857555
+Model: HuberRegressor, Parameters: {'epsilon': 1.1, 'alpha': 0.001}, R2: -0.13453968633625024, MSE: 0.050352294652631066, MAE: 0.07975722154822382
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.0001}, R2: -0.12183695618527723, MSE: 0.04978853155191474, MAE: 0.08009087525775208
+Model: HuberRegressor, Parameters: {'epsilon': 1.5, 'alpha': 0.001}, R2: -0.11935115791349604, MSE: 0.049678208705975405, MAE: 0.08013604452688561
+Best Model for danceability: BayesianRidge with Parameters {} and Mse: 0.022892758726609223
+Best Model for energy: BayesianRidge with Parameters {} and Mse: 0.04425189357935287
+Best Model for acousticness: BayesianRidge with Parameters {} and Mse: 0.0745940024398978
+Best Model for instrumentalness: GradientBoostingRegressor with Parameters {'n_estimators': 100, 'learning_rate': 0.1} and Mse: 0.037516107364694955
