@@ -28,8 +28,10 @@ venv/
 # Ignore large files 
 encoded_columns.csv
 
+
 # Ignore data files
 static/data.json
+output.txt
 
 # Ignore all model files
 models/
@@ -37,5 +39,6 @@ models/
 ```
 # pycache
 __pycache__/
+*__pycache__/
 ```
 *.pyc
