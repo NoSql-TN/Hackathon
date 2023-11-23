@@ -20,18 +20,18 @@
 .result-title{
     margin: 0 auto;
     align-items: center;
-    padding-top: 200px;
+    padding-top: 100px;
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 3.5rem;
+    font-size: 2rem;
     font-weight: 700;
 }
 
 .result-content{
-    padding-top: 50px;
+    padding-top: 0;
     margin: 0 auto;
     align-items: center;
     width: 100%;
@@ -43,7 +43,7 @@
 
 .result-text{
     font-weight: 900;
-    font-size: 10rem;
+    font-size: 6rem;
 }
 
 .btn-retour{
@@ -58,19 +58,3 @@
     cursor: pointer;
 }
 
-.btn-amelioration{
-    height: 50px;   
-    margin: 0 auto;
-    border-radius: 5px;
-    border: none;
-    font-size: 1.5rem;
-    font-weight: 500;
-    background-color: #1DB954;
-    color: white;
-    cursor: pointer;;
-}
-
-.btn-amelioration:hover{
-    background-color: #1ED760;
-    color: white;
-}

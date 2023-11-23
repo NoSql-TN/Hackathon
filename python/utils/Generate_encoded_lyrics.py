@@ -91,12 +91,20 @@ if __name__ == "__main__":
     vectorizer = TfidfVectorizer()
     tfidf_matrix = vectorizer.fit_transform(preprocessed_lyrics)
     pickle.dump(vectorizer, open('lyrics_encoder.pkl', 'wb'))
-    feature_array = np.array(vectorizer.get_feature_names_out())
-    tfidf_sorting = np.argsort(vectorizer.idf_)[::-1]
-    top_n = feature_array[tfidf_sorting][:1000]
+    # keep only the 1000 most important words
+    top_n = tfidf_matrix.sum(axis=0).tolist()[0]
+    top_n = np.array(top_n).argsort()[-1000:][::-1]
+    top_n = np.array(vectorizer.get_feature_names_out())[top_n]
+    
+    
 
     print("Top n")
     print(top_n)
+    
+    # put the 1000 words in a .txt
+    with open('top_n_words.txt', 'w') as f:
+        for item in top_n:
+            f.write('"%s",' % item)
 
     lyrics_encoded = tfidf_matrix.toarray()
     lyrics_encoded = pd.DataFrame(lyrics_encoded, columns=vectorizer.get_feature_names_out())

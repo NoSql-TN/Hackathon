@@ -122,9 +122,9 @@ def create_neural_network(input_dim):
     model = Sequential()
     model.add(Dense(256, input_dim=input_dim, activation='relu'))
     model.add(Dense(128, activation='relu'))
-    model.add(Dense(4, activation='linear'))  # Output layer with four units for the four target variables
+    model.add(Dense(4, activation='linear'))  
+    
 
-    # Compile the model
     optimizer = Adam(learning_rate=0.001)
     model.compile(loss='mean_squared_error', optimizer=optimizer, metrics=['mse'])
 
