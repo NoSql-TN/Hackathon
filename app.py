@@ -1,7 +1,6 @@
 # Import neded packages
 from flask import Flask, redirect, flash
 
-
 # Definition of the app
 def create_app() -> Flask:
     app = Flask(__name__)

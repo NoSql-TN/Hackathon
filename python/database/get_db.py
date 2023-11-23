@@ -8,3 +8,7 @@ def get_db():
 def get_db2():
     db = pd.read_csv('tcc_ceds_music.csv', sep=',')
     return db
+
+def get_db3():
+    db = pd.read_csv('spotify_song.csv', sep=',')
+    return db
