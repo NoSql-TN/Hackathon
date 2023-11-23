@@ -5,6 +5,17 @@ import pandas as pd
 from keras.models import load_model
 
 def predict_popularity(data):
+    
+    X = preprocess_data(data)
+    # predict the popularity
+    loaded_model = pickle.load(open('models/finalized_model.sav', 'rb'))
+    
+
+    prediction = loaded_model.predict(X)
+    
+    return prediction[0]
+    
+def preprocess_data(data):
     lyrics = data['lyrics']
     genre = data['genre']
     artist_name = data['artist_name']
@@ -100,17 +111,10 @@ def predict_popularity(data):
     # concatenate the encoded columns with the other columns, explicit, key, tempo, duration
     X = pd.concat([danceability, energy, acousticness, instrumentalness, tempo, duration, explicit, key, genre_encoded_pop, artist_name_encoded_pop], axis=1)
     
-    # load the model with pickle
-    loaded_model = pickle.load(open('models/finalized_model.sav', 'rb'))
     
-    # predict the popularity
     X=X.astype(float)
     X.columns = X.columns.astype(str)
-
-    prediction = loaded_model.predict(X)
-    
-    return prediction[0]
-    
+    return X
 
     
     

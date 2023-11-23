@@ -44,7 +44,7 @@
                             <input required type="float" value="{{tempo}}" class="form-control form-input" name="tempo" placeholder="Rentre le tempo (bpm)">
                         </div>
                     </div>
-                    <label for="explicit" class="predict-label">Explcit</label>
+                    <label for="explicit" class="predict-label">Explicit</label>
                         <div class="mb-3" style="width:200px;">
                             <select name="explicit">
                                 {% if explicit == 1 %}
@@ -96,7 +96,9 @@
                     </div>
                     <div class="button-container">
                         <a href="/prediction?paroles={{paroles}}&track_name={{track_name}}&artist_name={{artist_name}}&tempo={{tempo}}&explicit={{explicit}}&key={{key}}&duration={{duration}}&genre={{genre}}"
-                            class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Retour</a>
+                        class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Retour</a>
+                        <a href="/get-amelioration?paroles={{paroles}}&track_name={{track_name}}&artist_name={{artist_name}}&tempo={{tempo}}&explicit={{explicit}}&key={{key}}&duration={{duration}}&genre={{genre}}&score={{score}}"
+                        class="btn btn-lg active btn-amelioration" role="button" aria-pressed="true">Voir le détail et des améliorations</a>
                     </div>
                 </div>
             </div>

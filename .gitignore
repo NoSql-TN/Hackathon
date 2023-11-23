@@ -24,9 +24,11 @@ Thumbs.db
 
 # Ignore venv virtual environment
 venv/
+TestEnv/
 
 # Ignore large files 
 encoded_columns.csv
+prediction.csv
 
 
 # Ignore data files

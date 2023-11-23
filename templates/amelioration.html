@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/amelioration.css">
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col align-items-center">
+                <div class="result">
+                    <h1 class="result-title">Votre chanson peut s'améliorer de</h1>
+                    <div class="result-content">
+                        <p class="result-text">{{diff}}%</p>
+                    </div>
+                    {% if improvement %}
+                    <p class="category-text">Voici les améliorations possibles :</p>
+                    {% endif %}
+                    {% if alreadygood %}
+                    <p class="category-text">Votre chanson est déjà parfaite !</p>
+                    {% endif %}
+
+                    <div class="button-container">
+                        <a href="/prediction?paroles={{paroles}}&track_name={{track_name}}&artist_name={{artist_name}}&tempo={{tempo}}&explicit={{explicit}}&key={{key}}&duration={{duration}}&genre={{genre}}"
+                        class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Editer la chanson</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
