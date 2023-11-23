@@ -10,7 +10,7 @@ def predict_popularity(data):
     artist_name = data['artist_name']
     track_name = data['track_name']
     tempo = data['tempo']
-    key = data['clé']
+    key = data['cle']
     explicit = data['explicit']
     duration = data['duration']
 
@@ -67,7 +67,6 @@ def predict_popularity(data):
     energy = pd.DataFrame([prediction[0][1]], columns=['energy'])
     acousticness = pd.DataFrame([prediction[0][2]], columns=['acousticness'])
     instrumentalness = pd.DataFrame([prediction[0][3]], columns=['instrumentalness'])
-    print(danceability, energy, acousticness, instrumentalness)
     
     # importat the new encoder
     genre_encoder_pop = pickle.load(open('models/genre_encoder_pop.pkl', 'rb'))
@@ -75,17 +74,28 @@ def predict_popularity(data):
     
     genre_encoded_pop = genre_encoder_pop.transform([[genre]]).toarray()
     genre_encoded_pop = pd.DataFrame(genre_encoded_pop, columns=genre_encoder_pop.categories_)
-    print(genre_encoded_pop)
     
     artist_name_encoded_pop = artist_name_encoder_pop.transform([[artist_name]]).toarray()
     artist_name_encoded_pop = pd.DataFrame(artist_name_encoded_pop, columns=artist_name_encoder_pop.categories_)
-    print(artist_name_encoded_pop)
     
     duration = pd.DataFrame([duration], columns=['duration_ms'])
     explicit = pd.DataFrame([explicit], columns=['explicit'])
     explicit = explicit.astype(int)
     key = pd.DataFrame([key], columns=['key'])
     tempo = pd.DataFrame([tempo], columns=['tempo'])
+    
+    # print the types of every variable
+    # print(danceability.dtypes)
+    # print(energy.dtypes)
+    # print(acousticness.dtypes)
+    # print(instrumentalness.dtypes)
+    # print(tempo.dtypes)
+    # print(duration.dtypes)
+    # print(explicit.dtypes)
+    # print(key.dtypes)
+    # print(genre_encoded_pop.dtypes)
+    # print(artist_name_encoded_pop.dtypes)
+    
     
     # concatenate the encoded columns with the other columns, explicit, key, tempo, duration
     X = pd.concat([danceability, energy, acousticness, instrumentalness, tempo, duration, explicit, key, genre_encoded_pop, artist_name_encoded_pop], axis=1)

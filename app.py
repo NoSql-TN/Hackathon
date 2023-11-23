@@ -1,5 +1,6 @@
 # Import neded packages
-from flask import Flask, redirect, flash
+import os
+from flask import Flask, redirect, flash, send_from_directory
 
 # Definition of the app
 def create_app() -> Flask:
@@ -18,7 +19,12 @@ def create_app() -> Flask:
     
     from python.blueprints.predictionBP import predictionBP
     app.register_blueprint(predictionBP)
-    
+
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static'),
+                            'favicon.ico',mimetype='image/vnd.microsoft.icon')
+        
     # Error 404 handler
     @app.errorhandler(404)
     def pageNotFound(error):
