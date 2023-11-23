@@ -47,3 +47,6 @@ __pycache__/
 
 #ignore the model
 finalized_model.sav
+
+#gpt-model
+gpt-model/

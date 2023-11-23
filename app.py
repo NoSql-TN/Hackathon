@@ -2,7 +2,6 @@
 import os
 from flask import Flask, redirect, flash, send_from_directory
 
-
 # Definition of the app
 def create_app() -> Flask:
     app = Flask(__name__)
