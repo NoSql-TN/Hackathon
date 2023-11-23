@@ -48,3 +48,38 @@
 .duree-input {
     width: 55%;
     }
+
+.btn-predict-container{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+/* This is select drop down the style should be elegant and simple*/
+.genre {
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    position: relative;
+    min-width: 45ch;
+    max-width: 30ch;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
+.genre select, .genre::after {
+    grid-area: select;
+}
+.genre:not(.select--multiple)::after {
+    content: "";
+    justify-self: end;
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}

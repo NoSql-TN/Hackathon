@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if score == -1 %}
+
 <div class="page">
     <link rel="stylesheet" href="../static/styles/prediction.css">
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -11,61 +13,118 @@
             <div class="col-md-6">
                 <form action="/get-result" method="post">
                     <div class="mb-3">
-                      <label for="lyrics" class="predict-label">Paroles</label>
-                      <input type="text" class="form-control form-input" name="paroles" placeholder="Insérez les paroles de votre chanson">
+                        <label for="lyrics" class="predict-label">Paroles</label>
+                        <input required type="text" value="{{paroles}}" class="form-control form-input" name="paroles" placeholder="Insérez les paroles de votre chanson">
                     </div>
                     <div class="mb-3">
                     <label for="genre" class="predict-label">Genre</label>
                         <div class="mb-3" style="width:200px;">
                             <select name="genre">
-                                {% for genre in genre %}
-                                    <option value="{{ genre }}">{{ genre }}</option>
+                                {% for genre_name in genres %}
+                                    {% if genre == genre_name %}
+                                        <option value="{{ genre_name }}" selected>{{ genre_name }}</option>
+                                    {% else %}
+                                        <option value="{{ genre_name }}">{{ genre_name }}</option>
+                                    {% endif %}
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="predict-label">Titre</label>
-                        <input type="int" class="form-control form-input" name="track_name" placeholder="Rentre le titre de la musique">
+                        <input required type="int" value="{{track_name}}" class="form-control form-input" name="track_name" placeholder="Rentre le titre de la musique">
                     </div>
                     <div class="mb-3">
                         <label for="artists" class="predict-label">Nom d'artiste</label>
-                        <input type="int" class="form-control form-input" name="artist_name" placeholder="Rentre le nom de l'artiste">
+                        <input required type="int" value="{{artist_name}}" class="form-control form-input" name="artist_name" placeholder="Rentre le nom de l'artiste">
                     </div>
                     <div class="mb-3">
                         <label for="tempo" class="predict-label">Tempo</label>
                         <div class="tempo-input">
-                            <input type="float" class="form-control form-input" name="tempo" placeholder="Rentre le tempo (bpm)">
+                            <input required type="float" value="{{tempo}}" class="form-control form-input" name="tempo" placeholder="Rentre le tempo (bpm)">
                         </div>
                     </div>
                     <label for="explicit" class="predict-label">Explcit</label>
                         <div class="mb-3" style="width:200px;">
                             <select name="explicit">
-                                <option value="1">True</option>
-                                <option value="2">False</option>
+                                {% if explicit == 1 %}
+                                    <option value="1" selected>True</option>
+                                    <option value="2">False</option>
+                                {% else %}
+                                    <option value="1">True</option>
+                                    <option value="2" selected>False</option>
+                                {% endif %}
                             </select>
                         </div>
                     <label for="key" class="predict-label">Clé la plus présente</label>
                     <div class="mb-3" style="width:200px;">
                         <select name="key">
-                            {% for key in note %}
-                                <option value="{{ key }}">{{ key }}</option>
+                            {% for keys in note %}
+                                {% if keys == key %}
+                                    <option value="{{ keys }}" selected>{{ keys }}</option>
+                                {% else %}
+                                    <option value="{{ keys }}">{{ keys }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="duree" class="predict-label">Durée</label>
                         <div class="duree-input">
-                            <input type="int" class="form-control form-input" name="duration" placeholder="Rentre la durée de la musique en s">
+                            <input required type="int" value="{{duration}}" class="form-control form-input" name="duration" placeholder="Rentre la durée de la musique en s">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Effectuer une prédiction de popularité</button>
-
+                    <div class="btn-predict-container">
+                        <button type="submit" class="btn btn-primary btn-predict">Prédire sa popularité</button>
+                    </div>
                   </form>
             </div>
         </div>
     </div>
 </div>
+{% else %}
+
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/result-pred.css">
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col align-items-center">
+                <div class="result">
+                    <h1 class="result-title">Votre chanson est un "banger" à</h1>
+                    <div class="result-content">
+                        <p class="result-text">{{score}}%</p>
+                    </div>
+                    <div class="button-container">
+                        <a href="/prediction?paroles={{paroles}}&track_name={{track_name}}&artist_name={{artist_name}}&tempo={{tempo}}&explicit={{explicit}}&key={{key}}&duration={{duration}}&genre={{genre}}"
+                            class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var popularite = document.getElementsByClassName("result-text")[0];
+        var populariteValue = parseInt(popularite.innerHTML);
+        var red = 255;
+        var green = 0;
+        var stepSize = 255 / 100;
+        var step = 0;
+        while (step < populariteValue) {
+            green += stepSize;
+            if (green > 255) {
+                green = 255;
+            }
+            red -= stepSize;
+            if (red < 0) {
+                red = 0;
+            }
+            step += 1;
+        }
+        popularite.style.color = "rgb(" + red + "," + green + ",0)";
+    </script>
+</div>
+{% endif %}
+
 
 
 

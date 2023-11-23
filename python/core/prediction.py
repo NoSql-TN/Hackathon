@@ -85,16 +85,16 @@ def predict_popularity(data):
     tempo = pd.DataFrame([tempo], columns=['tempo'])
     
     # print the types of every variable
-    print(danceability.dtypes)
-    print(energy.dtypes)
-    print(acousticness.dtypes)
-    print(instrumentalness.dtypes)
-    print(tempo.dtypes)
-    print(duration.dtypes)
-    print(explicit.dtypes)
-    print(key.dtypes)
-    print(genre_encoded_pop.dtypes)
-    print(artist_name_encoded_pop.dtypes)
+    # print(danceability.dtypes)
+    # print(energy.dtypes)
+    # print(acousticness.dtypes)
+    # print(instrumentalness.dtypes)
+    # print(tempo.dtypes)
+    # print(duration.dtypes)
+    # print(explicit.dtypes)
+    # print(key.dtypes)
+    # print(genre_encoded_pop.dtypes)
+    # print(artist_name_encoded_pop.dtypes)
     
     
     # concatenate the encoded columns with the other columns, explicit, key, tempo, duration
