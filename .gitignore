@@ -27,8 +27,8 @@ venv/
 TestEnv/
 
 # Ignore large files 
-encoded_columns.csv
-prediction.csv
+csv/encoded_columns.csv
+csv/prediction.csv
 
 
 # Ignore data files
