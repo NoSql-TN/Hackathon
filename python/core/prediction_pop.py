@@ -13,7 +13,7 @@ import pickle
 
 
 # Load your dataset
-db = pd.read_csv('dataset.csv', sep=',')
+db = pd.read_csv('csv/dataset.csv', sep=',')
 df = pd.DataFrame(db)
 df = df.dropna()
 df = df.drop_duplicates()
@@ -139,7 +139,7 @@ X_test.columns = X_test.columns.astype(str)
 
 
 # Write every column name in a file
-with open('encoded_columns.csv', 'w') as f:
+with open('csv/encoded_columns.csv', 'w') as f:
     for col in X_test.columns:
         f.write(col + '\n')
 

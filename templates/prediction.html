@@ -59,11 +59,11 @@
                     <label for="key" class="predict-label">Clé la plus présente</label>
                     <div class="mb-3" style="width:200px;">
                         <select name="key">
-                            {% for keys in note %}
-                                {% if keys == key %}
-                                    <option value="{{ keys }}" selected>{{ keys }}</option>
+                            {% for key_name in note %}
+                                {% if key_name == key %}
+                                    <option value="{{ key_name }}" selected>{{ key_name }}</option>
                                 {% else %}
-                                    <option value="{{ keys }}">{{ keys }}</option>
+                                    <option value="{{ key_name }}">{{ key_name }}</option>
                                 {% endif %}
                             {% endfor %}
                         </select>

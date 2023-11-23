@@ -10,6 +10,9 @@ predictionBP = Blueprint('predictionBP', __name__)
 # Definition of the main route
 @predictionBP.route("/prediction")
 def prediction():
+    genres = ['blues','country','hip hop','jazz','pop','reggae','rock']
+    notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
+    
     args = request.args
     if args:
         paroles = args['paroles']
@@ -17,13 +20,16 @@ def prediction():
         artist_name = args['artist_name']
         track_name = args['track_name']
         tempo = int(args['tempo'])
-        key = int(args['key'])
+        if args['key'] in notes:
+            key = args['key']
+        elif int(args['key']) in range(0,12):
+            key = notes[int(args['key'])]
+        else:
+            key = notes[0]
         explicit = int(args['explicit'])
-        duration = int(int(args['duration'])/1000)
+        duration = int(int(args['duration']))
     else:
         paroles, genre, artist_name, track_name, tempo, key, explicit, duration = "", "", "", "", 100, 0, 0, 140
-    genres = ['blues','country','hip hop','jazz','pop','reggae','rock']
-    notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
     return render_template("prediction.html", genres=genres, note=notes, score=-1, paroles=paroles, genre=genre, artist_name=artist_name, track_name=track_name, tempo=tempo, key=key, explicit=explicit, duration=duration)
 
 @predictionBP.route("/get-result", methods=['POST'])    
@@ -40,8 +46,8 @@ def get_result():
     duration = int(request.form['duration'])*1000
     data = {"lyrics": paroles, "genre": genre, "artist_name": artist_name, "track_name": track_name, "tempo": tempo, "cle": key , "explicit" : explicit, "duration" : duration}
     score = round(predict_popularity(data),2)
-    with open('prediction.csv', 'w') as f:
-        if os.stat('prediction.csv').st_size == 0:
+    with open('csv/prediction.csv', 'w') as f:
+        if os.stat('csv/prediction.csv').st_size == 0:
             f.write('paroles,genre,artist_name,track_name,tempo,key,explicit,duration,score\n')
         f.write(f'{paroles},{genre},{artist_name},{track_name},{tempo},{key},{explicit},{duration},{score}\n')
     return render_template("prediction.html", score=score, genres=genre, note=notes, paroles=paroles, genre=genre, artist_name=artist_name, track_name=track_name, tempo=tempo, key=key, explicit=explicit, duration=duration)
@@ -60,8 +66,9 @@ def get_amelioration():
     explicit = int(args['explicit'])
     duration = int(int(args['duration'])/1000)
     score = float(args['score'])
-    data = {"lyrics": paroles, "genre": genre, "artist_name": artist_name, "track_name": track_name, "tempo": tempo, "cle": key , "explicit" : explicit, "duration" : duration, "score" : score}
+    data = {"lyrics": paroles, "genre": genre, "artist_name": artist_name, "track_name": track_name, "tempo": tempo, "cle": key , "explicit" : explicit, "duration" : duration, "score" : score, "notes" : notes}
     improvement, alreadygood = amelioration(data)
+    best_score = score
     if improvement != {}:
         best_score = score
         for variable in improvement.keys():

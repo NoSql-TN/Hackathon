@@ -6,10 +6,14 @@
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col align-items-center">
                 <div class="result">
-                    <h1 class="result-title">Votre chanson peut s'améliorer de</h1>
-                    <div class="result-content">
-                        <p class="result-text">{{diff}}%</p>
-                    </div>
+                    {% if diff > 0 %}
+                        <h1 class="result-title">Votre chanson peut s'améliorer de</h1>
+                        <div class="result-content">
+                            <p class="result-text">{{diff}}%</p>
+                        </div>
+                    {% else %}
+                        <h1 class="result-title">Votre chanson semble déjà excellente !</h1>
+                    {% endif %}
                     {% if improvement %}
                         <div class="list-group">
                             <h2 class="list-group-item">Améliorations possibles: </h2>
@@ -196,7 +200,7 @@
 
                     <div class="button-container">
                         <a href="/prediction?paroles={{paroles}}&track_name={{track_name}}&artist_name={{artist_name}}&tempo={{tempo}}&explicit={{explicit}}&key={{key}}&duration={{duration}}&genre={{genre}}"
-                        class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Editer la chanson</a>
+                        class="btn btn-primary btn-lg active btn-retour" role="button" aria-pressed="true">Éditer la chanson</a>
                     </div>
                 </div>
             </div>
@@ -206,7 +210,7 @@
 
     <script>
         var popularite = document.getElementsByClassName("text-score");
-        for (var i = 0; i < popularite.length; i++) {
+        for (var i = 0; i < popularite.length; i++){
             var populariteValue = parseFloat(popularite[i].innerHTML.split(": ")[1].split("%")[0]);
             var red = 255;
             var green = 0;

@@ -10,10 +10,10 @@ from tqdm import tqdm
 import pickle
 
 # Load the data
-X = pd.read_csv('encoded_columns.csv')
+X = pd.read_csv('csv/encoded_columns.csv')
 print("X Loaded")
 
-data = pd.read_csv('tcc_ceds_music.csv')
+data = pd.read_csv('csv/tcc_ceds_music.csv')
 data = data.drop('id', axis=1)
 Y = data[['danceability', 'energy', 'acousticness', 'instrumentalness']]
 print("Y Loaded")

@@ -30,7 +30,7 @@ def preprocess_text(text):
 if __name__ == "__main__":
     # Load your dataset
     # Assuming your dataset is in a CSV file named 'your_dataset.csv'
-    data = pd.read_csv('tcc_ceds_music.csv')
+    data = pd.read_csv('csv/tcc_ceds_music.csv')
     data = data.drop('id', axis=1)
 
 
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     X = pd.concat([genre_encoded, artist_name_encoded, track_name_encoded, lyrics_encoded, X['len']], axis=1)
 
     # save the encoded columns in a csv file
-    X.to_csv('encoded_columns.csv', index=False)
+    X.to_csv('csv/encoded_columns.csv', index=False)
 
     print("X encoded")
     print(X.head())
