@@ -1,4 +1,32 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="page">
+    <link rel="stylesheet" href="../static/styles/analyse-graph.css">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <link rel="stylesheet" href="../static/styles/analyse-stats.css">
+    {% if lyrics!="" %}
+        {% for lyric in lyrics %}
+            {{ lyric }}
+        {% endfor %}
+    {% else %}
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <form class="form" action = "/generation" method = "post">
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="form-control form-input" name="input" placeholder="Ecrivez les premières paroles">
+                    <span class="left-pan">
+                        <label class="btn btn-lg btn-genre active">
+                            <input class="btn btn-lg btn-genre active" type="submit" name="generate">
+                            Generate
+                        </label>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

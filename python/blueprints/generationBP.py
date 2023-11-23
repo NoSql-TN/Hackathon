@@ -9,9 +9,8 @@ generationBP = Blueprint('generationBP', __name__)
 # Definition of the main route
 @generationBP.route("/generation", methods=["GET", "POST"])
 def generation():
-    if request.method == "GET":
-        #input_user = request.args.get("input_user")
-        fake_lyrics = "Im a fake lyric"
+    if request.method == "POST":
+        input_user = request.form.get("input")
         host = 'tesla.telecomnancy.univ-lorraine.fr'
         username = 'bourdais4u'
         password = 'X.W.E5L3Rb'
@@ -22,17 +21,17 @@ def generation():
         try:
             ssh_client.connect(hostname=host, username=username, password=password)
             print("Connected to SSH server")
-            print('cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+fake_lyrics+';cat lyrics.txt')
-            cmd = 'cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+fake_lyrics+';cat lyrics.txt'
-            stdin, stdout, stderr = ssh_client.exec_command(cmd)
-            print("finito")
+            
+            stdin, stdout, stderr = ssh_client.exec_command('cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+input_user+';cat lyrics.txt')
+            print("Done!")
             output = stdout.read().decode('utf-8')
-            print(output)
+            lyrics_list = output.split("--sep--")
+            return render_template("generation.html", lyrics=lyrics_list)
         except paramiko.AuthenticationException:
             print("Authentication failed, please check your credentials.")
         except paramiko.SSHException as ssh_exception:
             print("SSH connection failed:", ssh_exception)
         finally:
             ssh_client.close()
-        
-    return render_template("generation.html")
+    elif request.method == "GET":
+        return render_template("generation.html", lyrics="")
