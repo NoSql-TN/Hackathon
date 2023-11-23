@@ -62,14 +62,9 @@ def get_amelioration():
     score = float(args['score'])
     data = {"lyrics": paroles, "genre": genre, "artist_name": artist_name, "track_name": track_name, "tempo": tempo, "cle": key , "explicit" : explicit, "duration" : duration, "score" : score}
     improvement, alreadygood = amelioration(data)
-    print("improvement")
-    print(improvement)
     if improvement != {}:
         best_score = score
         for variable in improvement.keys():
             if improvement[variable][1] > best_score:
                 best_score = improvement[variable][1]
-    print("alreadygood")
-    print(alreadygood)
-    alreadygood = {}
     return render_template("amelioration.html", score=score, genres=genre, note=notes, paroles=paroles, genre=genre, artist_name=artist_name, track_name=track_name, tempo=tempo, key=key, explicit=explicit, duration=duration, diff=round(best_score-score,2), improvement=improvement, alreadygood=alreadygood)

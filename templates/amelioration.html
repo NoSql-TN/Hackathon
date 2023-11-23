@@ -2,7 +2,6 @@
 
 {% block content %}
 <div class="page">
-    <link rel="stylesheet" href="../static/styles/amelioration.css">
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col align-items-center">
@@ -12,10 +11,187 @@
                         <p class="result-text">{{diff}}%</p>
                     </div>
                     {% if improvement %}
-                    <p class="category-text">Voici les améliorations possibles :</p>
+                        <div class="list-group">
+                            <h2 class="list-group-item">Améliorations possibles: </h2>
+                            <!-- Pass through each possible parameter and give a specific advice and the improved score -->
+                            {% for theme,advice in improvement.items() %}
+                                {% if theme == "tempo" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Le tempo:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "genre" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Le genre:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "explicit" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Explicit:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "key" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Clé majoritaire:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "duration" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">La durée:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "lyrics" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Les paroles:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                                {% if theme == "track_name" %}
+                                    <a  class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">Le titre:</h5>
+                                            <small class="text-upgrade">+{{ (advice[1] - score )|round(2) }}%</small>
+                                        </div>
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                            <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     {% endif %}
                     {% if alreadygood %}
-                    <p class="category-text">Votre chanson est déjà parfaite !</p>
+                    <div class="list-group" style="padding-top: 30px;">
+                        <h2 class="list-group-item">Les points forts: </h2>
+                        {% for theme,advice in alreadygood.items() %}
+                            {% if theme == "tempo" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Le tempo:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "genre" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Le genre:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                            <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "explicit" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Explicit:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "key" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Clé majoritaire:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "duration" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">La durée:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "lyrics" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Les paroles:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                            {% if theme == "track_name" %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Le titre:</h5>
+                                        <small class="text-upgrade">-{{ (score - advice[1])|round(2) }}%</small>
+                                    </div>
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="mb-1">{{advice[0]}}</p>
+                                        <small class="text-score">Nouveau score: {{advice[1]|round(2)}}%</small>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                     {% endif %}
 
                     <div class="button-container">
@@ -26,5 +202,29 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="../static/styles/amelioration.css">
+
+    <script>
+        var popularite = document.getElementsByClassName("text-score");
+        for (var i = 0; i < popularite.length; i++) {
+            var populariteValue = parseFloat(popularite[i].innerHTML.split(": ")[1].split("%")[0]);
+            var red = 255;
+            var green = 0;
+            var stepSize = 255 / 100;
+            var step = 0;
+            while (step < populariteValue) {
+                green += stepSize;
+                if (green > 255) {
+                    green = 255;
+                }
+                red -= stepSize;
+                if (red < 0) {
+                    red = 0;
+                }
+                step += 1;
+            }
+            popularite[i].style.color = "rgb(" + red + "," + green + ",0)";
+        }
+    </script>
 </div>
 {% endblock %}

@@ -11,7 +11,7 @@ generationBP = Blueprint('generationBP', __name__)
 def generation():
     if request.method == "GET":
         #input_user = request.args.get("input_user")
-        fake_lyrics = "I'm a fake lyric"
+        fake_lyrics = "Im a fake lyric"
         host = 'tesla.telecomnancy.univ-lorraine.fr'
         username = 'bourdais4u'
         password = 'X.W.E5L3Rb'
@@ -22,8 +22,9 @@ def generation():
         try:
             ssh_client.connect(hostname=host, username=username, password=password)
             print("Connected to SSH server")
-            
-            stdin, stdout, stderr = ssh_client.exec_command('cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+fake_lyrics+';cat lyrics.txt')
+            print('cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+fake_lyrics+';cat lyrics.txt')
+            cmd = 'cd PI/Remi/Hackathon2/;source venv/bin/activate;python3 python/core/lyrics_generator.py '+fake_lyrics+';cat lyrics.txt'
+            stdin, stdout, stderr = ssh_client.exec_command(cmd)
             print("finito")
             output = stdout.read().decode('utf-8')
             print(output)
