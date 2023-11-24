@@ -7,8 +7,8 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <link rel="stylesheet" href="../static/styles/analyse-stats.css">
     {% if lyrics!="" %}
-        {% for lyric in lyrics %}
-            {{ lyric }}
+        {% for i in range(0, 5) %}
+            <p>{{lyrics[i]}} with {{scores[i]}}% chance</p>
         {% endfor %}
     {% else %}
     <div class="container">

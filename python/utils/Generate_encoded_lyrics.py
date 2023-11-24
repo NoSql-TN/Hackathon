@@ -24,16 +24,13 @@ def preprocess_text(text):
     lemmatized_words = [lemmatizer.lemmatize(word) for word in filtered_words]
 
     return ' '.join(lemmatized_words)
-
-
+    
 
 if __name__ == "__main__":
     # Load your dataset
     # Assuming your dataset is in a CSV file named 'your_dataset.csv'
-    data = pd.read_csv('csv/tcc_ceds_music.csv')
+    data = pd.read_csv('csv/spotify_song.csv')
     data = data.drop('id', axis=1)
-
-
 
 
     # Assuming your dataframe is named 'df'
@@ -82,18 +79,23 @@ if __name__ == "__main__":
     track_name_encoded = track_name_encoded.iloc[:, :500]
 
 
-    print("Track name encoded")
-
-
-    preprocessed_lyrics =  X['lyrics'].apply(preprocess_text)
+    # print("Track name encoded")
+    
+    #ignore all the rows with None as lyrics
+    
+    # data = data[data['parole'].notna()]
+    # print(len(data))
+    # data['parole'] = data['parole'].astype(str)
+    preprocessed_lyrics =  data['parole'].apply(preprocess_text)
     # convert if needed the preprocessed_lyrics column to a string type
     preprocessed_lyrics = preprocessed_lyrics.astype(str)
     vectorizer = TfidfVectorizer()
-    tfidf_matrix = vectorizer.fit_transform(preprocessed_lyrics)
+    tfidf_matrix = vectorizer.fit(preprocessed_lyrics)
     pickle.dump(vectorizer, open('lyrics_encoder.pkl', 'wb'))
-    # keep only the 1000 most important words
+    print("Lyrics vectorizer")
+    # keep only the 1500 most important words
     top_n = tfidf_matrix.sum(axis=0).tolist()[0]
-    top_n = np.array(top_n).argsort()[-1000:][::-1]
+    top_n = np.array(top_n).argsort()[-1500:][::-1]
     top_n = np.array(vectorizer.get_feature_names_out())[top_n]
     
     

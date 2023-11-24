@@ -1,5 +1,6 @@
 from flask import Blueprint,session, request
 from flask.templating import render_template
+from python.core.prediction import predict_popularity_from_lyrics
 
 import paramiko
 
@@ -26,7 +27,11 @@ def generation():
             print("Done!")
             output = stdout.read().decode('utf-8')
             lyrics_list = output.split("--sep--")
-            return render_template("generation.html", lyrics=lyrics_list)
+            score_list = []
+            for i in range(len(lyrics_list)):
+                score_list.append(predict_popularity_from_lyrics(lyrics_list[i]))
+            print(score_list)
+            return render_template("generation.html", lyrics=lyrics_list, scores=score_list)
         except paramiko.AuthenticationException:
             print("Authentication failed, please check your credentials.")
         except paramiko.SSHException as ssh_exception:

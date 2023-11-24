@@ -10,10 +10,20 @@ def predict_popularity(data):
     # predict the popularity
     loaded_model = pickle.load(open('models/finalized_model.sav', 'rb'))
     
-
     prediction = loaded_model.predict(X)
     
     return prediction[0]
+
+def predict_popularity_from_lyrics(lyrics):
+    # encode the lyrics
+    lyrics_encoder = pickle.load(open('models/lyrics_pop_encoder.pkl', 'rb'))
+    lyrics_encoded = lyrics_encoder.transform([lyrics]).toarray()
+    
+    pop_model = load_model('models/best_model_popularity_nn.keras')
+    score = pop_model.predict(lyrics_encoded)
+    print(score)
+    return score[0][0]
+    
     
 def preprocess_data(data):
     lyrics = data['lyrics']
