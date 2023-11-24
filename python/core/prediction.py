@@ -14,15 +14,17 @@ def predict_popularity(data):
     
     return prediction[0]
 
-def predict_popularity_from_lyrics(lyrics):
+def predict_popularity_from_lyrics(lyrics_list):
     # encode the lyrics
     lyrics_encoder = pickle.load(open('models/lyrics_pop_encoder.pkl', 'rb'))
-    lyrics_encoded = lyrics_encoder.transform([lyrics]).toarray()
-    
     pop_model = load_model('models/best_model_popularity_nn.keras')
-    score = pop_model.predict(lyrics_encoded)
+    lyrics_encoded, score = [], []
+    for i in range(len(lyrics_list)):
+        lyrics_list[i] = preprocess_text(lyrics_list[i])
+        lyrics_encoded.append(lyrics_encoder.transform([lyrics_list[i]]).toarray())
+        score.append(pop_model.predict(lyrics_encoded[i])[0][0])
     print(score)
-    return score[0][0]
+    return score
     
     
 def preprocess_data(data):

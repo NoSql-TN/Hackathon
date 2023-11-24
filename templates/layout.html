@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-                {% if url_for(request.endpoint) == "/generation" %}
+                {% if url_for(request.endpoint) == "/generation" or url_for(request.endpoint) == "/generated" %}
                 <li class="nav-item active">
                     <a class="nav-link" href="/generation"><i class="fa-solid fa-gear"></i></i>Génération</a>
                 </li>

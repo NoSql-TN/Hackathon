@@ -39,10 +39,13 @@ def generated():
         output = stdout.read().decode('utf-8')
         lyrics_list1 = output.split("--sep--")
         lyrics_list = lyrics_list1[:-1]
-        score_list = []
-        for i in range(len(lyrics_list)):
-            score_list.append(predict_popularity_from_lyrics(lyrics_list[i]))
-        print(score_list)
+        print(lyrics_list)
+        score_list = predict_popularity_from_lyrics(lyrics_list)
+        lyrics_list = [x for _,x in sorted(zip(score_list,lyrics_list), reverse=True)]
+        score_list.sort(reverse=True)
+
+        lyrics_list = [lyrics_list[0], lyrics_list[2], lyrics_list[4]]
+        score_list = [score_list[0], score_list[2], score_list[4]]
         return render_template("generation.html", lyrics=lyrics_list, scores=score_list)
 
     except paramiko.AuthenticationException:

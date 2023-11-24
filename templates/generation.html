@@ -12,39 +12,53 @@
             <div class="row height d-flex justify-content-center align-items-center">
                 <div class="col align-items-center">
                     <div class="result">
-                        <div class="list-group">
-                            <h2 class="list-group-item">Propositions : </h2>
+                        <div class="text-center" style="padding-bottom: 30px;">
+                            <h1>Voici les paroles proposés :</h1>
+                        </div>
+                        <div class="row justify-content-center">
                             {% for i in range(lyrics|length) %}
-                                {% set lyric = lyrics[i] %}
-                                <a  class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ lyric }}</h5> 
-                                        <small>Score : {{ scores[i] }}</small>
+                                <div class="col-md-4">
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <p class="title">Paroles n°{{ i+1 }}:</p>
+                                            <p class="lyrics">
+                                            {% for line in lyrics[i].split('\n') %}
+                                                {{ line }}<br>
+                                            {% endfor %}
+                                            </p>
+                                            <div class="score popularite">Score: {{ scores[i] }}</div>
+                                        </div>
                                     </div>
-                                </a>
+                                </div>
                             {% endfor %}
                         </div>
-                    </div>
-                    <!-- put a return button here -->
-                    <div class="return">
-                        <a href="/generation" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Retour</a>
                     </div>
                 </div>
             </div>
         </div>
+        <a href="/generation" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Retour</a>
     </div>
     {% else %}
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
-                <form class="form" action = "/generation" method = "post">
+                <div class="text-center" style="padding-top: 300px;">
+                    <h1 style="font-size: 3rem;font-weight: 500;">Génération de paroles:</h1>
+                </div>
+                <form class="form" action="/generation" method="post" style="margin-top: 30px;">
                     <i class="fa fa-search"></i>
                     <input type="text" class="form-control form-input" name="input" placeholder="Ecrivez les premières paroles">
                     <span class="left-pan">
-                        <label class="btn btn-lg btn-genre active">
-                            <input class="btn btn-lg btn-genre active" type="submit" name="generate">
-                            Generate
-                        </label>
+                        <div class="" data-toggle="buttons">
+                            <label class="btn btn-lg btn-artist">
+                                <input type="radio" name="artiste" id="option1" autocomplete="off">
+                                Generate
+                            </label>
+                            <label class="btn btn-lg btn-genre active">
+                                <input type="radio" name="genre" id="option2" autocomplete="off">
+                                Generate
+                            </label>
+                        </div>
                     </span>
                 </form>
             </div>
@@ -52,4 +66,26 @@
     </div>
     {% endif %}
 </div>
+<script>
+    var popularite = document.getElementsByClassName("popularite");
+    for (var i = 0; i < popularite.length; i++) {
+        var populariteValue = parseInt(popularite[i].innerHTML.split(": ")[1]);
+        var red = 255;
+        var green = 0;
+        var stepSize = 255 / 100;
+        var step = 0;
+        while (step < populariteValue) {
+            green += stepSize;
+            if (green > 255) {
+                green = 255;
+            }
+            red -= stepSize;
+            if (red < 0) {
+                red = 0;
+            }
+            step += 1;
+        }
+        popularite[i].style.color = "rgb(" + red + "," + green + ",0)";
+    }
+</script>
 {% endblock %}

@@ -137,17 +137,8 @@ y_train_nn, y_test_nn = y_train.values, y_test.values
 # Define the neural network model
 def create_popularity_predictor(input_dim):
     model = Sequential()
-    model.add(Dense(512, input_dim=input_dim, activation=LeakyReLU(alpha=0.01)))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.3))
-    model.add(Dense(256, activation=LeakyReLU(alpha=0.01)))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.2))
-    model.add(Dense(128, activation=LeakyReLU(alpha=0.01)))
-    model.add(BatchNormalization())
-    model.add(Dropout(0.))
-    model.add(Dense(64, activation=LeakyReLU(alpha=0.01)))
-    model.add(BatchNormalization())
+    model.add(Dense(128, input_dim=input_dim, activation='relu'))
+    model.add(Dense(64, activation='relu'))
     model.add(Dense(1, activation='linear'))  
 
     # Compile the model
