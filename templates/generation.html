@@ -7,9 +7,32 @@
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <link rel="stylesheet" href="../static/styles/analyse-stats.css">
     {% if lyrics!="" %}
-        {% for i in range(0, 5) %}
-            <p>{{lyrics[i]}} with {{scores[i]}}% chance</p>
-        {% endfor %}
+    <div class="page">
+        <div class="container">
+            <div class="row height d-flex justify-content-center align-items-center">
+                <div class="col align-items-center">
+                    <div class="result">
+                        <div class="list-group">
+                            <h2 class="list-group-item">Propositions : </h2>
+                            {% for i in range(lyrics|length) %}
+                                {% set lyric = lyrics[i] %}
+                                <a  class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{ lyric }}</h5> 
+                                        <small>Score : {{ scores[i] }}</small>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- put a return button here -->
+                    <div class="return">
+                        <a href="/generation" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Retour</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% else %}
     <div class="container">
         <div class="row height d-flex justify-content-center align-items-center">
